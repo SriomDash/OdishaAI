@@ -1,0 +1,65 @@
+# -----------------------------
+# Python cache & build files
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# Byte-compiled / optimized
+*.manifest
+*.spec
+
+# -----------------------------
+# Virtual Environments
+# -----------------------------
+aienv/
+.venv/
+venv/
+env/
+
+# -----------------------------
+# Environment & secrets
+# -----------------------------
+.env
+*.env
+
+# -----------------------------
+# Chroma / vector DB folders
+# -----------------------------
+odisha_chroma/
+chroma/
+chroma_db/
+
+# -----------------------------
+# IDE / Editor configs
+# -----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------
+# OS-generated files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+
+# -----------------------------
+# Node/Web (if index.html uses build tools later)
+# -----------------------------
+node_modules/
+dist/
+build/
+
+# -----------------------------
+# Local data files (optional)
+# Comment out if you want to track
+# -----------------------------
+odisha_data.json

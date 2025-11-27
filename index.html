@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chakadola Yatra | Odisha Travel Planner</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --odia-maroon: #800000;
+            --odia-maroon-dark: #4a0000;
+            --odia-gold: #D4AF37;
+            --odia-gold-light: #f3e5ab;
+            --odia-cream: #FFF8E7;
+            --text-dark: #2c1810;
+            --shadow-soft: 0 10px 40px -10px rgba(128, 0, 0, 0.3);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--odia-cream);
+            /* Subtle geometric background pattern */
+            background-image: radial-gradient(var(--odia-gold) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* --- SIDEBAR DESIGN --- */
+        .sidebar {
+            width: 35%;
+            background: linear-gradient(135deg, var(--odia-maroon), var(--odia-maroon-dark));
+            color: var(--odia-gold);
+            padding: 50px 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            border-right: 4px solid var(--odia-gold);
+        }
+
+        /* CSS-only Pasapalli Pattern Overlay */
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1)), 
+                linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .brand-content { position: relative; z-index: 2; }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+        }
+
+        .odia-script {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.8rem;
+            color: var(--odia-gold-light);
+            margin-bottom: 20px;
+        }
+
+        .decorative-line {
+            height: 2px;
+            background: radial-gradient(circle, var(--odia-gold) 0%, transparent 100%);
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: auto;
+        }
+
+        /* --- FORM SECTION --- */
+        .form-section {
+            width: 65%;
+            padding: 40px 50px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--odia-maroon);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--odia-gold-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .form-group { margin-bottom: 25px; }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        /* Custom Inputs */
+        input[type="text"], 
+        input[type="number"], 
+        input[type="date"], 
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-left: 4px solid var(--odia-gold); /* Gold accent */
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            background: #fff;
+            border-color: var(--odia-maroon);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            margin: 10px 0;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--odia-maroon);
+            border: 2px solid var(--odia-gold);
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: var(--odia-gold);
+        }
+
+        /* Flex Row for Counters */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+        }
+        .col { flex: 1; }
+
+        /* Counter Box */
+        .counter-box {
+            background: var(--odia-cream);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px dashed var(--odia-maroon);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .counter-box input {
+            width: 60px;
+            text-align: center;
+            margin: 0;
+            border-left: 1px solid #ddd;
+        }
+
+        /* Chips */
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .chip {
+            padding: 8px 18px;
+            border: 1px solid var(--odia-maroon);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fff;
+            color: var(--odia-maroon);
+        }
+        .chip:hover {
+            background: var(--odia-gold-light);
+        }
+        .chip.active {
+            background: var(--odia-maroon);
+            color: var(--odia-gold);
+            box-shadow: 0 4px 10px rgba(128,0,0,0.3);
+            border-color: var(--odia-maroon);
+        }
+
+        /* Value Display */
+        .value-display {
+            float: right;
+            color: var(--odia-maroon);
+            font-weight: 700;
+        }
+
+        /* Button */
+        .btn-generate {
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            background: linear-gradient(90deg, var(--odia-maroon), #600000);
+            color: var(--odia-gold);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 1px;
+        }
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(128,0,0,0.25);
+        }
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        /* Animation */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; border-radius: 0; height: auto; }
+            .sidebar { width: 100%; padding: 30px; border-right: none; border-bottom: 4px solid var(--odia-gold); }
+            .form-section { width: 100%; padding: 30px 20px; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="sidebar">
+            <div class="brand-content">
+                <h1>CHAKADOLA</h1>
+                <div class="odia-script">ଚକାଡୋଳା ଯାତ୍ରା</div>
+                <div class="decorative-line"></div>
+                <p style="letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">Divine Odisha Journeys</p>
+            </div>
+            <div class="brand-content quote">
+                "From the architecture of Konark to the spirituality of Puri."
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Plan Your Sacred Journey</h2>
+
+            <div class="form-group">
+                <label>
+                    Total Group Size
+                    <span id="people-val" class="value-display">2 People</span>
+                </label>
+                <input id="people-range" type="range" min="1" max="20" value="2" oninput="updateTotalPeople()">
+            </div>
+
+            <div class="form-group flex-row">
+                <div class="col">
+                    <label>Seniors (60+)</label>
+                    <div class="counter-box">
+                        <span>👴</span>
+                        <input id="senior-count" type="number" min="0" value="0">
+                    </div>
+                </div>
+                <div class="col">
+                    <label>Children (<12)</label>
+                    <div class="counter-box">
+                        <span>👶</span>
+                        <input id="child-count" type="number" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group flex-row">
+                <div class="col">
+                    <label>Duration (Days)</label>
+                    <input id="duration" type="number" min="1" value="3">
+                </div>
+                <div class="col">
+                    <label>Start Date</label>
+                    <input id="start-date" type="date">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Estimated Budget
+                    <span id="budget-val" class="value-display">₹15,000</span>
+                </label>
+                <input id="budget-range" type="range" min="5000" max="200000" step="1000" value="15000" oninput="updateBudget()">
+            </div>
+
+            <div class="form-group">
+                <label>Vibe of the Trip</label>
+                <div class="chip-container" id="vibe-container">
+                    <div class="chip active">Spiritual / Jagannath</div>
+                    <div class="chip">Nature / Eco</div>
+                    <div class="chip">Beach Relax</div>
+                    <div class="chip">Heritage / Arts</div>
+                    <div class="chip">Tribal / Rural</div>
+                    <div class="chip">Food Tour</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Specific Places</label>
+                <input id="specific-places" type="text" placeholder="Eg: Konark Sun Temple, Chilika Lake...">
+            </div>
+
+            <div class="form-group">
+                <label>Additional Preferences</label>
+                <textarea id="preferences" rows="2" placeholder="Eg: Pure Veg Food, Wheelchair accessibility..."></textarea>
+            </div>
+
+            <button class="btn-generate" id="submit-btn">✨ Create Itinerary</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Set default date to today
+        document.getElementById('start-date').valueAsDate = new Date();
+
+        // 2. Update Slider Displays
+        function updateTotalPeople() {
+            const val = document.getElementById("people-range").value;
+            document.getElementById("people-val").innerText = val + " People";
+        }
+
+        function updateBudget() {
+            let val = document.getElementById("budget-range").value;
+            // Format number to Indian Currency
+            let formatted = parseInt(val).toLocaleString("en-IN");
+            document.getElementById("budget-val").innerText = "₹" + formatted;
+        }
+
+        // 3. Toggle Chips Logic (New Feature added in upgrade)
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // 4. Submit Data (Existing Logic from your original code)
+        document.getElementById("submit-btn").addEventListener("click", async () => {
+            
+            // Add loading state feedback
+            const btn = document.getElementById("submit-btn");
+            const originalText = btn.innerText;
+            btn.innerText = "⏳ Weaving your journey...";
+            btn.style.opacity = "0.8";
+
+            try {
+                const payload = {
+                    group_size: parseInt(document.getElementById("people-range").value),
+                    seniors: parseInt(document.getElementById("senior-count").value) || 0,
+                    children: parseInt(document.getElementById("child-count").value) || 0,
+                    duration: parseInt(document.getElementById("duration").value),
+                    start_date: document.getElementById("start-date").value,
+                    budget: parseInt(document.getElementById("budget-range").value),
+                    specific_places: document.getElementById("specific-places").value,
+                    preferences: document.getElementById("preferences").value,
+                    // Collect all active chips
+                    vibes: Array.from(document.querySelectorAll(".chip.active")).map(c => c.innerText.trim())
+                };
+
+                console.log("Sending Payload:", payload);
+
+                // Ensure backend is running on localhost:8000
+                let res = await fetch("http://localhost:8000/itinerary", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                let data = await res.json();
+                
+                // Reset button
+                btn.innerText = "✅ Itinerary Ready!";
+                setTimeout(() => btn.innerText = originalText, 2000);
+
+                alert(data.status); // This will show the response from your Python backend
+            } catch (error) {
+                console.error(error);
+                btn.innerText = "❌ Error Connecting";
+                alert("Could not connect to backend. Is uvicorn running on port 8000?");
+                setTimeout(() => btn.innerText = originalText, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
