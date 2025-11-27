@@ -9,13 +9,17 @@
 
     <style>
         :root {
-            --odia-maroon: #800000;
-            --odia-maroon-dark: #4a0000;
-            --odia-gold: #D4AF37;
-            --odia-gold-light: #f3e5ab;
-            --odia-cream: #FFF8E7;
-            --text-dark: #2c1810;
-            --shadow-soft: 0 10px 40px -10px rgba(128, 0, 0, 0.3);
+            --odia-maroon: #6A040F;
+            --odia-maroon-light: #9D0208;
+            --odia-gold: #FAA307;
+            --odia-gold-dim: #D48C00;
+            --odia-cream: #FFF8F0;
+            --odia-sand: #FFE6A7;
+            --text-dark: #2B2118;
+            --text-light: #6D5D4B;
+            --white: #FFFFFF;
+            --shadow-soft: 0 20px 60px -15px rgba(106, 4, 15, 0.2);
+            --radius: 20px;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -23,8 +27,9 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--odia-cream);
-            background-image: radial-gradient(var(--odia-gold) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-image: radial-gradient(var(--odia-gold-dim) 0.5px, transparent 0.5px), radial-gradient(var(--odia-gold-dim) 0.5px, var(--odia-cream) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
@@ -37,25 +42,39 @@
             display: flex;
             width: 100%;
             max-width: 1100px;
-            background: #fff;
-            border-radius: 24px;
+            background: var(--white);
+            border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            animation: slideUp 0.8s ease-out;
+            border: 1px solid rgba(250, 163, 7, 0.2);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
+        /* --- CSS TO REMOVE SPINNERS --- */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+
+        /* --- Sidebar Styling --- */
         .sidebar {
             width: 35%;
-            background: linear-gradient(135deg, var(--odia-maroon), var(--odia-maroon-dark));
-            color: var(--odia-gold);
-            padding: 50px 30px;
+            background: linear-gradient(160deg, var(--odia-maroon), var(--odia-maroon-light));
+            color: var(--odia-sand);
+            padding: 60px 40px;
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
+            align-items: center;
             text-align: center;
-            border-right: 4px solid var(--odia-gold);
+            z-index: 1;
+            overflow: hidden;
         }
 
         .sidebar::before {
@@ -63,73 +82,146 @@
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image: 
-                linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1)), 
-                linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1));
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            opacity: 0.3;
+                radial-gradient(circle at 100% 100%, transparent 10px, rgba(255,255,255,0.05) 11px, transparent 12px),
+                radial-gradient(circle at 0% 0%, transparent 10px, rgba(255,255,255,0.05) 11px, transparent 12px);
+            background-size: 40px 40px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .chakra-container {
+            position: absolute;
+            top: 50%;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            transform: translateY(-50%);
+            z-index: 0;
             pointer-events: none;
         }
 
-        .brand-content { position: relative; z-index: 2; }
-        
-        h1 {
+        .chakra-svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--odia-gold);
+            stroke-width: 2;
+            opacity: 0.15;
+            animation: rotateWheel 30s linear infinite;
+        }
+
+        @keyframes rotateWheel {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .brand-content {
+            z-index: 2;
+            width: 100%;
+        }
+
+        .brand-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3rem;
+            /* Slightly reduced font size to prevent cutting off */
+            font-size: 3rem; 
             font-weight: 700;
             letter-spacing: 2px;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            color: var(--white);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            line-height: 1;
+            /* Added margin-right to push the centered text to the LEFT */
+            margin-right: 25px; 
         }
 
         .odia-script {
             font-family: 'Baloo 2', cursive;
-            font-size: 1.8rem;
-            color: var(--odia-gold-light);
+            font-size: 2.2rem;
+            color: var(--odia-gold);
             margin-bottom: 20px;
+            font-weight: 700;
+            opacity: 1;
         }
 
         .decorative-line {
-            height: 2px;
-            background: radial-gradient(circle, var(--odia-gold) 0%, transparent 100%);
-            margin: 20px auto;
-            width: 80%;
+            height: 3px;
+            background: var(--odia-maroon-light);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+            margin: 20px auto 40px auto;
+            width: 50%;
+            opacity: 0.8;
+            border-radius: 2px;
         }
 
         .quote {
+            font-family: 'Cinzel', serif;
             font-style: italic;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
             margin-top: auto;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background: transparent;
+            z-index: 2;
         }
 
+        /* --- Form Section Styling --- */
         .form-section {
             width: 65%;
-            padding: 40px 50px;
+            padding: 50px 60px;
             overflow-y: auto;
             max-height: 90vh;
+            background: var(--white);
         }
+
+        .form-section::-webkit-scrollbar { width: 8px; }
+        .form-section::-webkit-scrollbar-track { background: transparent; }
+        .form-section::-webkit-scrollbar-thumb { background: #eee; border-radius: 4px; }
+        .form-section::-webkit-scrollbar-thumb:hover { background: #ddd; }
 
         h2 {
             font-family: 'Cinzel', serif;
             color: var(--odia-maroon);
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--odia-gold-light);
-            padding-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 35px;
+            position: relative;
             display: inline-block;
         }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: var(--odia-gold);
+            border-radius: 2px;
+        }
 
-        .form-group { margin-bottom: 25px; }
+        .form-group { margin-bottom: 30px; }
 
         label {
-            display: block;
-            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-            margin-bottom: 8px;
+            letter-spacing: 1.2px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .required-star {
+            color: #D90429;
+            font-size: 1.2rem;
+            margin-left: 4px;
+            line-height: 0;
+            vertical-align: middle;
         }
 
         input[type="text"], 
@@ -137,183 +229,235 @@
         input[type="date"], 
         textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-left: 4px solid var(--odia-gold);
-            border-radius: 8px;
+            padding: 14px 18px;
+            border: 2px solid #EAEAEA;
+            border-radius: 12px;
             font-family: 'Poppins', sans-serif;
-            background: #fafafa;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            background: #FAFAFA;
+            transition: all 0.3s ease;
         }
 
-        input:focus, textarea:focus {
+        input[type="text"]:focus, 
+        input[type="number"]:focus, 
+        input[type="date"]:focus, 
+        textarea:focus {
             outline: none;
-            background: #fff;
-            border-color: var(--odia-maroon);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--white);
+            border-color: var(--odia-gold);
+            box-shadow: 0 4px 15px rgba(250, 163, 7, 0.15);
+            transform: translateY(-1px);
+        }
+
+        input.input-error {
+            border-color: #D90429;
+            background: #FFF5F5;
         }
 
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
             background: transparent;
-            margin: 10px 0;
+            margin: 15px 0 5px 0;
         }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background: var(--odia-maroon);
-            border: 2px solid var(--odia-gold);
-            cursor: pointer;
-            margin-top: -8px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
+        
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 4px;
+            height: 6px;
             cursor: pointer;
-            background: #ddd;
-            border-radius: 2px;
+            background: #EAEAEA;
+            border-radius: 10px;
+            transition: background 0.3s;
         }
-        input[type=range]:focus::-webkit-slider-runnable-track {
-            background: var(--odia-gold);
+
+        input[type=range]:hover::-webkit-slider-runnable-track {
+            background: #DDD;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: var(--odia-maroon);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 2px var(--odia-gold), 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            margin-top: -9px; 
+            transition: transform 0.2s;
+        }
+
+        input[type=range]:active::-webkit-slider-thumb {
+            transform: scale(1.1);
+            background: var(--odia-maroon-light);
         }
 
         .flex-row {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         .col { flex: 1; }
 
         .counter-box {
-            background: var(--odia-cream);
-            padding: 15px;
+            background: var(--white);
+            padding: 8px 10px;
             border-radius: 12px;
-            border: 1px dashed var(--odia-maroon);
+            border: 2px solid var(--odia-maroon);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            transition: border-color 0.3s;
         }
+        
+        .counter-box:focus-within {
+            border-color: var(--odia-gold);
+            box-shadow: 0 4px 15px rgba(250, 163, 7, 0.15);
+        }
+
         .counter-box input {
-            width: 60px;
+            width: 100%;
             text-align: center;
             margin: 0;
-            border-left: 1px solid #ddd;
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            font-weight: 600;
+            color: var(--odia-maroon);
+            font-size: 1.1rem;
         }
 
         .chip-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
+        
         .chip {
-            padding: 8px 18px;
-            border: 1px solid var(--odia-maroon);
+            padding: 10px 20px;
+            border: 1px solid #EAEAEA;
+            background: #FAFAFA;
             border-radius: 50px;
             font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
             cursor: pointer;
-            transition: all 0.3s;
-            background: #fff;
-            color: var(--odia-maroon);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            user-select: none;
         }
+        
         .chip:hover {
-            background: var(--odia-gold-light);
+            transform: translateY(-2px);
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-color: var(--odia-gold);
+            color: var(--odia-gold-dim);
         }
+        
         .chip.active {
             background: var(--odia-maroon);
-            color: var(--odia-gold);
-            box-shadow: 0 4px 10px rgba(128,0,0,0.3);
+            color: var(--odia-sand);
             border-color: var(--odia-maroon);
+            box-shadow: 0 5px 15px rgba(106, 4, 15, 0.3);
+            transform: translateY(-1px);
         }
 
         .value-display {
-            float: right;
+            font-family: 'Cinzel', serif;
             color: var(--odia-maroon);
             font-weight: 700;
+            font-size: 1rem;
+            background: var(--odia-cream);
+            padding: 2px 10px;
+            border-radius: 4px;
         }
 
         .btn-generate {
             width: 100%;
-            padding: 18px;
-            margin-top: 20px;
-            background: linear-gradient(90deg, var(--odia-maroon), #600000);
-            color: var(--odia-gold);
+            padding: 20px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, var(--odia-maroon), #500000);
+            color: var(--white);
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-family: 'Cinzel', serif;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(106, 4, 15, 0.4);
         }
         
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(128,0,0,0.25);
-        }
-        
-        .btn-generate:active {
-            transform: translateY(0);
+        .btn-generate::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
         }
 
-        .btn-generate:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
+        .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(106, 4, 15, 0.5);
         }
+        
+        .btn-generate:hover::after { left: 100%; }
+        
+        .btn-generate:active { transform: translateY(-1px); }
+        .btn-generate:disabled { opacity: 0.7; cursor: wait; transform: none; }
 
         .btn-generate .spinner-small {
             display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid var(--odia-gold);
-            border-top: 2px solid transparent;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid var(--white);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-            vertical-align: middle;
+            animation: spin 0.8s linear infinite;
+            margin-right: 12px;
+            vertical-align: text-bottom;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .error-message, .success-message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+            animation: slideUp 0.3s ease-out;
         }
 
         .error-message {
-            background: #fee;
-            color: #c00;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #c00;
-            display: none;
+            background: #FFF2F2;
+            color: #D90429;
+            border: 1px solid #FFCDD2;
+            border-left: 4px solid #D90429;
         }
 
         .success-message {
-            background: #efe;
-            color: #060;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #060;
-            display: none;
+            background: #F0FFF4;
+            color: #2D6A4F;
+            border: 1px solid #B7E4C7;
+            border-left: 4px solid #2D6A4F;
         }
 
-        @media (max-width: 768px) {
-            .container { flex-direction: column; border-radius: 0; height: auto; }
-            .sidebar { width: 100%; padding: 30px; border-right: none; border-bottom: 4px solid var(--odia-gold); }
-            .form-section { width: 100%; padding: 30px 20px; }
-            h1 { font-size: 2.2rem; }
+        @media (max-width: 900px) {
+            .container { flex-direction: column; max-width: 600px; }
+            .sidebar { width: 100%; padding: 40px 30px; min-height: 300px; justify-content: center; }
+            .chakra-container { left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0.3; width: 400px; height: 400px; }
+            .form-section { width: 100%; padding: 40px 30px; max-height: none; }
+            .flex-row { flex-direction: column; gap: 20px; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -322,12 +466,41 @@
     <div class="container">
         
         <div class="sidebar">
+            <div class="chakra-container">
+                <svg class="chakra-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="95" stroke-width="2"/>
+                    <circle cx="100" cy="100" r="88" stroke-width="4"/>
+                    <circle cx="100" cy="100" r="80" stroke-width="1" stroke-dasharray="2 2"/>
+                    <circle cx="100" cy="100" r="15" fill="var(--odia-gold)" fill-opacity="0.3"/>
+                    <circle cx="100" cy="100" r="22" stroke-width="3"/>
+                    <g stroke-width="5" stroke-linecap="butt">
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(0, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(45, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(90, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(135, 100, 100)" />
+                    </g>
+                    <g stroke-width="2">
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(22.5, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(67.5, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(112.5, 100, 100)" />
+                        <line x1="100" y1="22" x2="100" y2="178" transform="rotate(157.5, 100, 100)" />
+                    </g>
+                    <g fill="var(--odia-gold)">
+                        <circle cx="100" cy="5" r="3" />
+                        <circle cx="100" cy="195" r="3" />
+                        <circle cx="5" cy="100" r="3" />
+                        <circle cx="195" cy="100" r="3" />
+                    </g>
+                </svg>
+            </div>
+
             <div class="brand-content">
                 <h1>CHAKADOLA</h1>
                 <div class="odia-script">ଚକାଡୋଳା ଯାତ୍ରା</div>
                 <div class="decorative-line"></div>
-                <p style="letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">Divine Odisha Journeys</p>
+                <p style="letter-spacing: 3px; font-size: 0.75rem; text-transform: uppercase; font-weight: 500; color: var(--odia-sand);">Divine Odisha Journeys</p>
             </div>
+            
             <div class="brand-content quote">
                 "From the architecture of Konark to the spirituality of Puri."
             </div>
@@ -348,15 +521,19 @@
                 <div class="col">
                     <label>Seniors (60+)</label>
                     <div class="counter-box">
-                        <span>👴</span>
-                        <input id="senior-count" type="number" min="0" value="0">
+                        <input id="senior-count" type="number" min="0" value="0" placeholder="0">
                     </div>
                 </div>
                 <div class="col">
                     <label>Children (<12)</label>
                     <div class="counter-box">
-                        <span>👶</span>
-                        <input id="child-count" type="number" min="0" value="0">
+                        <input id="child-count" type="number" min="0" value="0" placeholder="0">
+                    </div>
+                </div>
+                <div class="col">
+                    <label>Specially Abled</label>
+                    <div class="counter-box">
+                        <input id="abled-count" type="number" min="0" value="0" placeholder="0">
                     </div>
                 </div>
             </div>
@@ -393,8 +570,11 @@
             </div>
 
             <div class="form-group">
-                <label>Specific Places (Optional)</label>
-                <input id="specific-places" type="text" placeholder="Eg: Konark Sun Temple, Chilika Lake...">
+                <label>
+                    Places to Include (Mandatory)
+                    <span class="required-star">*</span>
+                </label>
+                <input id="specific-places" type="text" placeholder="Eg: Konark Sun Temple, Chilika Lake..." required>
             </div>
 
             <div class="form-group">
@@ -410,13 +590,13 @@
     </div>
 
     <script>
-        // Set default date to today
         document.getElementById('start-date').valueAsDate = new Date();
 
-        // Update Slider Displays
         function updateTotalPeople() {
             const val = document.getElementById("people-range").value;
             document.getElementById("people-val").innerText = val + " People";
+            // Re-validate instantly when slider changes
+            validateGroupComposition();
         }
 
         function updateBudget() {
@@ -425,27 +605,34 @@
             document.getElementById("budget-val").innerText = "₹" + formatted;
         }
 
-        // Toggle Chips
         document.querySelectorAll('.chip').forEach(chip => {
             chip.addEventListener('click', function() {
                 this.classList.toggle('active');
             });
         });
 
-        // API Configuration
         const API_URL = "http://localhost:8000/itinerary";
 
-        // Submit Handler
         document.getElementById("submit-btn").addEventListener("click", async () => {
             const btn = document.getElementById("submit-btn");
             const errorMsg = document.getElementById("error-message");
             const successMsg = document.getElementById("success-message");
             
-            // Hide previous messages
             errorMsg.style.display = "none";
             successMsg.style.display = "none";
 
-            // Validate vibes
+            // --- VALIDATION STEPS ---
+            const placesInput = document.getElementById("specific-places");
+            if (!placesInput.value.trim()) {
+                errorMsg.textContent = "❌ Please specify at least one place to include.";
+                errorMsg.style.display = "block";
+                placesInput.classList.add("input-error"); 
+                placesInput.focus();
+                return;
+            } else {
+                placesInput.classList.remove("input-error");
+            }
+
             const activeVibes = Array.from(document.querySelectorAll(".chip.active"));
             if (activeVibes.length === 0) {
                 errorMsg.textContent = "❌ Please select at least one trip vibe";
@@ -453,18 +640,18 @@
                 return;
             }
 
-            // Validate group composition
+            // Group Validation Check
             const groupSize = parseInt(document.getElementById("people-range").value);
             const seniors = parseInt(document.getElementById("senior-count").value) || 0;
             const children = parseInt(document.getElementById("child-count").value) || 0;
+            const abled = parseInt(document.getElementById("abled-count").value) || 0;
 
-            if (seniors + children > groupSize) {
-                errorMsg.textContent = "❌ Seniors + children cannot exceed total group size";
+            if (seniors + children + abled > groupSize) {
+                errorMsg.textContent = "❌ Seniors + Children + Specially Abled cannot exceed Total Group Size";
                 errorMsg.style.display = "block";
                 return;
             }
 
-            // Show loading state
             const originalText = btn.innerHTML;
             btn.innerHTML = '<span class="spinner-small"></span>Crafting your journey...';
             btn.disabled = true;
@@ -474,10 +661,11 @@
                     group_size: groupSize,
                     seniors: seniors,
                     children: children,
+                    specially_abled: abled, // Added new field
                     duration: parseInt(document.getElementById("duration").value),
                     start_date: document.getElementById("start-date").value,
                     budget: parseInt(document.getElementById("budget-range").value),
-                    specific_places: document.getElementById("specific-places").value,
+                    specific_places: placesInput.value,
                     preferences: document.getElementById("preferences").value,
                     vibes: activeVibes.map(c => c.innerText.trim())
                 };
@@ -498,15 +686,9 @@
 
                 if (data.success) {
                     console.log("✅ Received itinerary:", data.data);
-
-                    // Store data for results page
                     localStorage.setItem('chakadola_itinerary', JSON.stringify(data.data));
-
-                    // Show success message
                     successMsg.textContent = "✅ Itinerary created! Redirecting...";
                     successMsg.style.display = "block";
-
-                    // Redirect to results page after 1 second
                     setTimeout(() => {
                         window.location.href = "results.html";
                     }, 1000);
@@ -516,29 +698,30 @@
 
             } catch (error) {
                 console.error("❌ Error:", error);
-                
-                errorMsg.textContent = `❌ ${error.message || "Could not connect to server. Please ensure the backend is running on port 8000."}`;
+                errorMsg.textContent = `❌ ${error.message || "Could not connect to server."}`;
                 errorMsg.style.display = "block";
-
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
         });
 
-        // Input validation
         document.getElementById("senior-count").addEventListener("input", validateGroupComposition);
         document.getElementById("child-count").addEventListener("input", validateGroupComposition);
+        document.getElementById("abled-count").addEventListener("input", validateGroupComposition);
         document.getElementById("people-range").addEventListener("input", validateGroupComposition);
+        document.getElementById("specific-places").addEventListener("input", function() {
+            if(this.value.trim()) this.classList.remove("input-error");
+        });
 
         function validateGroupComposition() {
             const groupSize = parseInt(document.getElementById("people-range").value);
             const seniors = parseInt(document.getElementById("senior-count").value) || 0;
             const children = parseInt(document.getElementById("child-count").value) || 0;
-            
+            const abled = parseInt(document.getElementById("abled-count").value) || 0;
             const errorMsg = document.getElementById("error-message");
             
-            if (seniors + children > groupSize) {
-                errorMsg.textContent = "⚠️ Warning: Seniors + children exceeds group size";
+            if (seniors + children + abled > groupSize) {
+                errorMsg.textContent = "⚠️ Warning: Composition exceeds Total Group Size (" + groupSize + ")";
                 errorMsg.style.display = "block";
             } else {
                 errorMsg.style.display = "none";

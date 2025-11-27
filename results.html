@@ -7,7 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
@@ -106,6 +105,29 @@
             height: 500px;
             border-radius: 15px;
             border: 3px solid var(--odia-gold);
+        }
+
+        /* Custom Marker CSS */
+        .custom-marker-pin {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--odia-maroon); /* Fixed Brand Color */
+            border: 2px solid white;
+            color: var(--odia-gold); /* Gold Text */
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 28px; /* vertically center text */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+        
+        .custom-marker-pin:hover {
+            transform: scale(1.15);
+            background-color: #600000;
+            z-index: 1000 !important;
+            cursor: pointer;
         }
 
         /* Trip Summary Card */
@@ -376,13 +398,11 @@
 
         <div id="content" style="display: none;">
             <div class="main-grid">
-                <!-- Map Section -->
                 <div class="map-section">
                     <h2>📍 Your Travel Route</h2>
                     <div id="map"></div>
                 </div>
 
-                <!-- Trip Summary -->
                 <div class="summary-card">
                     <h2>✨ Trip Summary</h2>
                     
@@ -422,7 +442,6 @@
                 </div>
             </div>
 
-            <!-- Day-wise Itinerary -->
             <div class="itinerary-section">
                 <h2>📅 Day-wise Itinerary</h2>
                 <div id="days-container"></div>
@@ -430,7 +449,6 @@
         </div>
     </div>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
@@ -438,7 +456,6 @@
         let itineraryData = null;
         let mapData = null;
 
-        // Try to get data from URL query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const dataParam = urlParams.get('data');
 
@@ -452,7 +469,6 @@
             }
         }
 
-        // Fallback to localStorage
         if (!itineraryData) {
             const stored = localStorage.getItem('chakadola_itinerary');
             if (stored) {
@@ -466,7 +482,6 @@
             }
         }
 
-        // If still no data, show error
         if (!itineraryData) {
             document.getElementById('loading').innerHTML = `
                 <h2 style="color: var(--odia-maroon);">⚠️ No Itinerary Data Found</h2>
@@ -538,33 +553,56 @@
         }
 
         function renderMap(data) {
+            // India Bounds to restrict panning
+            const southWest = L.latLng(6.0, 68.0);
+            const northEast = L.latLng(37.0, 97.0);
+            const indiaBounds = L.latLngBounds(southWest, northEast);
+
             const center = data.center || [20.2961, 85.8245];
-            const map = L.map('map').setView(center, 8);
+            
+            // Initialize Map with Restrictions
+            const map = L.map('map', {
+                center: center,
+                zoom: 8,
+                minZoom: 5, 
+                maxBounds: indiaBounds,
+                maxBoundsViscosity: 1.0
+            });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-
-            // Add markers
+            
             const markers = [];
+            
             (data.leaflet_points || []).forEach((point, index) => {
-                const marker = L.marker([point.lat, point.lng])
+                // Uniform Maroon Styling for ALL places
+                const customIcon = L.divIcon({
+                    className: 'custom-div-icon',
+                    // Maroon circle with White border and Gold number
+                    html: `<div class="custom-marker-pin">${index + 1}</div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
+                });
+
+                const marker = L.marker([point.lat, point.lng], { icon: customIcon })
                     .addTo(map)
                     .bindPopup(`<b>${index + 1}. ${point.name}</b>`);
+                
                 markers.push(marker);
             });
 
-            // Draw route
+            // Draw Route - Black Graph Lines
             if (data.coords_array && data.coords_array.length > 1) {
                 L.polyline(data.coords_array, {
-                    color: '#800000',
-                    weight: 3,
-                    opacity: 0.7,
-                    dashArray: '10, 10'
+                    color: 'black', 
+                    weight: 4,      
+                    opacity: 0.8,
+                    smoothFactor: 1
                 }).addTo(map);
             }
 
-            // Fit bounds to show all markers
+            // Fit bounds
             if (markers.length > 0) {
                 const group = L.featureGroup(markers);
                 map.fitBounds(group.getBounds().pad(0.1));
@@ -632,7 +670,6 @@
             return card;
         }
 
-        // Print functionality
         window.print = function() {
             window.print();
         };
