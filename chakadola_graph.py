@@ -468,6 +468,13 @@ def map_function(state: State):
 # -------------------------------------------------------------------
 # 5️⃣ FINAL NODE → Context-Rich Itinerary
 # -------------------------------------------------------------------
+def ensure_date(d):
+    if isinstance(d, datetime):
+        return d.date()
+    if hasattr(d, "strftime"):  # datetime.date
+        return d
+    return datetime.strptime(d, "%Y-%m-%d").date()
+
 def final_function(state: State):
     """Generate detailed, context-aware itinerary"""
     try:
@@ -479,7 +486,7 @@ def final_function(state: State):
         mapinfo = state["map_info"]
 
         duration = req["duration"]
-        start_date = datetime.strptime(req["start_date"], "%Y-%m-%d")
+        start_date = ensure_date(req["start_date"])
 
         days = []
         places_per_day = max(1, len(places) // duration)
@@ -533,7 +540,7 @@ def final_function(state: State):
             "final_itinerary": {
                 "trip_summary": {
                     "duration": duration,
-                    "start_date": req["start_date"],
+                    "start_date": ensure_date(req["start_date"]).strftime("%Y-%m-%d"),
                     "total_places": len(places),
                     "season": context.get("season"),
                     "group_size": req.get("group_size", 2),
