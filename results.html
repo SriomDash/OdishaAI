@@ -57,11 +57,7 @@
         }
 
         /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
+        .loading { text-align: center; padding: 60px 20px; }
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid var(--odia-maroon);
@@ -71,22 +67,12 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Main Grid Layout */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        /* Map Section */
-        .map-section {
+        /* Layouts */
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        
+        .map-section, .summary-card {
             background: white;
             border-radius: 20px;
             padding: 20px;
@@ -94,292 +80,101 @@
             border: 2px solid var(--odia-gold);
         }
 
-        .map-section h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--odia-maroon);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
+        #map { height: 500px; border-radius: 15px; border: 3px solid var(--odia-gold); }
 
-        #map {
-            height: 500px;
-            border-radius: 15px;
-            border: 3px solid var(--odia-gold);
-        }
+        h2 { font-family: 'Cinzel', serif; color: var(--odia-maroon); margin-bottom: 15px; font-size: 1.5rem; }
 
-        /* Custom Marker CSS */
+        /* Custom Marker */
         .custom-marker-pin {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: var(--odia-maroon); /* Fixed Brand Color */
-            border: 2px solid white;
-            color: var(--odia-gold); /* Gold Text */
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 28px; /* vertically center text */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            width: 32px; height: 32px; border-radius: 50%; background-color: var(--odia-maroon);
+            border: 2px solid white; color: var(--odia-gold); text-align: center; font-size: 14px;
+            font-weight: bold; line-height: 28px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             transition: transform 0.2s;
         }
-        
-        .custom-marker-pin:hover {
-            transform: scale(1.15);
-            background-color: #600000;
-            z-index: 1000 !important;
-            cursor: pointer;
-        }
+        .custom-marker-pin:hover { transform: scale(1.15); background-color: #600000; z-index: 1000 !important; }
 
-        /* Trip Summary Card */
-        .summary-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px solid var(--odia-gold);
-        }
+        /* Stats & Cost */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: var(--odia-cream); padding: 15px; border-radius: 12px; border-left: 4px solid var(--odia-maroon); }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #666; margin-bottom: 5px; }
+        .stat-value { font-size: 1.3rem; font-weight: 600; color: var(--odia-maroon); }
+        .cost-breakdown { background: linear-gradient(135deg, #fff9e6, #fff); padding: 20px; border-radius: 15px; margin-top: 20px; border: 2px dashed var(--odia-gold); }
+        .cost-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0; }
+        .cost-item:last-child { border-bottom: none; font-weight: 600; font-size: 1.1rem; color: var(--odia-maroon); padding-top: 12px; border-top: 2px solid var(--odia-gold); }
 
-        .summary-card h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--odia-maroon);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--odia-gold);
-            padding-bottom: 10px;
-        }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            background: var(--odia-cream);
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--odia-maroon);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--odia-maroon);
-        }
-
-        .vibe-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .vibe-tag {
-            padding: 6px 15px;
-            background: var(--odia-maroon);
-            color: var(--odia-gold);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        /* Cost Breakdown */
-        .cost-breakdown {
-            background: linear-gradient(135deg, #fff9e6, #fff);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            border: 2px dashed var(--odia-gold);
-        }
-
-        .cost-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .cost-item:last-child {
-            border-bottom: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--odia-maroon);
-            padding-top: 12px;
-            border-top: 2px solid var(--odia-gold);
-        }
-
-        /* Day Cards */
-        .itinerary-section {
-            margin-top: 30px;
-        }
-
-        .itinerary-section h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--odia-maroon);
-            font-size: 2rem;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
+        /* --- NEW DAY CARD STYLES --- */
         .day-card {
             background: white;
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             border-left: 6px solid var(--odia-gold);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
-
-        .day-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
+        .day-card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
 
         .day-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--odia-cream);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--odia-cream);
         }
+        .day-number { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--odia-maroon); font-weight: 700; }
+        .date-text { font-size: 1.1rem; font-weight: 600; color: var(--text-dark); }
 
-        .day-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            color: var(--odia-maroon);
-            font-weight: 700;
-        }
-
-        .day-date {
-            text-align: right;
-        }
-
-        .date-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .day-name {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .destinations {
-            margin: 20px 0;
-        }
-
+        /* Destination Card with Image */
+        .destinations { display: flex; flex-direction: column; gap: 20px; margin-bottom: 25px; }
+        
         .destination-item {
+            display: flex;
             background: var(--odia-cream);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--odia-maroon);
-        }
-
-        .destination-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--odia-maroon);
-            margin-bottom: 5px;
-        }
-
-        .destination-desc {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .entry-fee {
-            display: inline-block;
-            background: var(--odia-gold);
-            color: white;
-            padding: 3px 10px;
             border-radius: 15px;
-            font-size: 0.8rem;
-            margin-top: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(128,0,0,0.1);
         }
 
-        .day-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+        .dest-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .info-box {
-            background: #f8f8f8;
-            padding: 15px;
-            border-radius: 10px;
+        .dest-image-container {
+            width: 180px;
+            height: auto;
+            min-height: 120px;
         }
 
-        .info-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: #666;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .dest-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
         }
+        
+        .destination-item:hover .dest-image { transform: scale(1.1); }
 
-        .info-value {
-            font-size: 1rem;
-            color: var(--text-dark);
-        }
+        .destination-name { font-size: 1.3rem; font-weight: 700; color: var(--odia-maroon); margin-bottom: 8px; }
+        .destination-desc { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 10px; }
+        .entry-fee { display: inline-block; background: var(--odia-gold); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
 
-        .tips-section {
-            margin-top: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #fff3cd, #fff9e6);
-            border-radius: 10px;
-            border-left: 4px solid #ffc107;
-        }
+        /* Info Grid */
+        .day-info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; background: #fafafa; padding: 15px; border-radius: 12px; }
+        .info-label { font-size: 0.7rem; text-transform: uppercase; color: #888; font-weight: 700; margin-bottom: 4px; }
+        .info-value { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
 
-        .tips-section h4 {
-            color: #856404;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
+        /* Tips */
+        .tips-section { margin-top: 20px; padding: 15px; background: #fffbe6; border-radius: 10px; border-left: 4px solid #ffc107; display: flex; align-items: flex-start; gap: 10px; }
+        .bulb-icon { font-size: 1.2rem; }
+        .tips-list { list-style: none; padding: 0; margin: 0; }
+        .tips-list li { font-size: 0.9rem; color: #856404; margin-bottom: 4px; }
 
-        .tips-section ul {
-            margin-left: 20px;
-            color: #856404;
-        }
-
-        .tips-section li {
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .day-info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            body { background: white; }
-            .map-section { page-break-after: always; }
+        @media (max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .day-info-grid { grid-template-columns: 1fr 1fr; }
+            .destination-item { flex-direction: column-reverse; }
+            .dest-image-container { width: 100%; height: 200px; }
         }
     </style>
 </head>
@@ -393,57 +188,32 @@
         <div class="loading" id="loading">
             <div class="spinner"></div>
             <h2>Weaving your sacred journey...</h2>
-            <p>Our AI is crafting your perfect Odisha itinerary</p>
         </div>
 
         <div id="content" style="display: none;">
             <div class="main-grid">
                 <div class="map-section">
-                    <h2>📍 Your Travel Route</h2>
+                    <h2>📍 Route Map</h2>
                     <div id="map"></div>
                 </div>
 
                 <div class="summary-card">
                     <h2>✨ Trip Summary</h2>
-                    
                     <div class="stat-grid">
-                        <div class="stat-box">
-                            <div class="stat-label">Duration</div>
-                            <div class="stat-value" id="duration-stat">-</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Start Date</div>
-                            <div class="stat-value" id="start-date-stat">-</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Places</div>
-                            <div class="stat-value" id="places-stat">-</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Season</div>
-                            <div class="stat-value" id="season-stat">-</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Group Size</div>
-                            <div class="stat-value" id="group-stat">-</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Trip Type</div>
-                            <div class="stat-value" id="type-stat">-</div>
-                        </div>
+                        <div class="stat-box"><div class="stat-label">Duration</div><div class="stat-value" id="duration-stat">-</div></div>
+                        <div class="stat-box"><div class="stat-label">Total Places</div><div class="stat-value" id="places-stat">-</div></div>
+                        <div class="stat-box"><div class="stat-label">Group Size</div><div class="stat-value" id="group-stat">-</div></div>
+                        <div class="stat-box"><div class="stat-label">Type</div><div class="stat-value" id="type-stat">-</div></div>
                     </div>
-
-                    <div class="vibe-tags" id="vibe-tags"></div>
-
                     <div class="cost-breakdown">
-                        <h3 style="color: var(--odia-maroon); margin-bottom: 15px; font-size: 1.1rem;">💰 Cost Breakdown (Per Person/Day)</h3>
+                        <h3 style="color: var(--odia-maroon); margin-bottom: 15px; font-size: 1.1rem;">💰 Cost Breakdown (Per Person)</h3>
                         <div id="cost-items"></div>
                     </div>
                 </div>
             </div>
 
             <div class="itinerary-section">
-                <h2>📅 Day-wise Itinerary</h2>
+                <h2 style="text-align: center;">📅 Day-wise Itinerary</h2>
                 <div id="days-container"></div>
             </div>
         </div>
@@ -452,44 +222,50 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Get itinerary data from URL parameters or localStorage
+        // --- IMAGE HELPER FUNCTION ---
+        // Since we don't have real images in DB, we select based on keywords
+        function getPlaceImage(placeName) {
+            const name = placeName.toLowerCase();
+            
+            // Unsplash Source URLs (High Quality)
+            if (name.includes('temple') || name.includes('shrine') || name.includes('mandir')) {
+                return 'https://images.unsplash.com/photo-1599833975773-5328227b9522?q=80&w=400&auto=format&fit=crop'; // Konark Style
+            } 
+            else if (name.includes('beach') || name.includes('sea') || name.includes('port')) {
+                return 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400&auto=format&fit=crop'; // Beach
+            }
+            else if (name.includes('lake') || name.includes('chilika') || name.includes('dam')) {
+                return 'https://images.unsplash.com/photo-1558273683-92c222df6746?q=80&w=400&auto=format&fit=crop'; // Lake/Water
+            }
+            else if (name.includes('waterfall') || name.includes('falls') || name.includes('spring')) {
+                return 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=400&auto=format&fit=crop'; // Waterfall
+            }
+            else if (name.includes('wildlife') || name.includes('sanctuary') || name.includes('forest') || name.includes('park')) {
+                return 'https://images.unsplash.com/photo-1535941339077-2dd1c7963098?q=80&w=400&auto=format&fit=crop'; // Forest/Deer
+            }
+            else if (name.includes('palace') || name.includes('fort') || name.includes('museum')) {
+                return 'https://images.unsplash.com/photo-1590453530089-2996d929737f?q=80&w=400&auto=format&fit=crop'; // Heritage
+            }
+            else {
+                // Default Odisha Culture Image
+                return 'https://images.unsplash.com/photo-1627918507304-48405d4d38ba?q=80&w=400&auto=format&fit=crop'; 
+            }
+        }
+
+        // --- MAIN LOGIC ---
         let itineraryData = null;
         let mapData = null;
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataParam = urlParams.get('data');
-
-        if (dataParam) {
+        const stored = localStorage.getItem('chakadola_itinerary');
+        if (stored) {
             try {
-                const decoded = JSON.parse(decodeURIComponent(dataParam));
+                const decoded = JSON.parse(stored);
                 itineraryData = decoded.itinerary;
                 mapData = decoded.map_data;
-            } catch (e) {
-                console.error("Failed to parse URL data:", e);
-            }
-        }
-
-        if (!itineraryData) {
-            const stored = localStorage.getItem('chakadola_itinerary');
-            if (stored) {
-                try {
-                    const decoded = JSON.parse(stored);
-                    itineraryData = decoded.itinerary;
-                    mapData = decoded.map_data;
-                } catch (e) {
-                    console.error("Failed to parse localStorage data:", e);
-                }
-            }
-        }
-
-        if (!itineraryData) {
-            document.getElementById('loading').innerHTML = `
-                <h2 style="color: var(--odia-maroon);">⚠️ No Itinerary Data Found</h2>
-                <p>Please generate an itinerary first from the planning page.</p>
-                <a href="index.html" style="display: inline-block; margin-top: 20px; padding: 15px 30px; background: var(--odia-maroon); color: var(--odia-gold); text-decoration: none; border-radius: 10px; font-weight: 600;">← Back to Planner</a>
-            `;
+                renderItinerary();
+            } catch (e) { console.error("Error parsing data", e); }
         } else {
-            renderItinerary();
+            document.getElementById('loading').innerHTML = '<h3>No Data Found. Please go back.</h3>';
         }
 
         function renderItinerary() {
@@ -499,180 +275,92 @@
             const summary = itineraryData.trip_summary || {};
             const days = itineraryData.days || [];
             const costSummary = itineraryData.cost_summary || {};
-            const context = itineraryData.context || {};
 
-            // Render Summary Stats
-            document.getElementById('duration-stat').textContent = `${summary.duration || 0} Days`;
-            document.getElementById('start-date-stat').textContent = summary.start_date || 'N/A';
-            document.getElementById('places-stat').textContent = `${summary.total_places || 0} Places`;
-            document.getElementById('season-stat').textContent = summary.season || 'N/A';
-            document.getElementById('group-stat').textContent = `${summary.group_size || 0} People`;
-            document.getElementById('type-stat').textContent = context.is_family_trip ? 'Family' : 'Adventure';
+            // Stats
+            document.getElementById('duration-stat').innerText = `${summary.duration} Days`;
+            document.getElementById('places-stat').innerText = summary.total_places;
+            document.getElementById('group-stat').innerText = `${summary.group_size} People`;
+            document.getElementById('type-stat').innerText = summary.vibes[0] || 'Mixed';
 
-            // Render Vibe Tags
-            const vibeContainer = document.getElementById('vibe-tags');
-            (summary.vibes || []).forEach(vibe => {
-                const tag = document.createElement('span');
-                tag.className = 'vibe-tag';
-                tag.textContent = vibe;
-                vibeContainer.appendChild(tag);
-            });
-
-            // Render Cost Breakdown
+            // Cost
             const costContainer = document.getElementById('cost-items');
             const costs = [
-                { label: '🏨 Stay', value: costSummary.stay || 0 },
-                { label: '🍽️ Food', value: costSummary.food || 0 },
-                { label: '🚗 Travel', value: costSummary.travel || 0 },
-                { label: '🎭 Activities', value: costSummary.activities || 0 },
-                { label: '📦 Miscellaneous', value: costSummary.misc || 0 },
-                { label: '💵 Total Per Day', value: costSummary.total_per_person_day || 0, isTotal: true }
+                { l: 'Stay', v: costSummary.stay },
+                { l: 'Travel', v: costSummary.travel },
+                { l: 'Food', v: costSummary.food },
+                { l: 'Total / Day', v: costSummary.total_per_person_day }
             ];
-
-            costs.forEach(cost => {
-                const div = document.createElement('div');
-                div.className = 'cost-item';
-                div.innerHTML = `
-                    <span>${cost.label}</span>
-                    <span>₹${cost.value.toLocaleString('en-IN')}</span>
-                `;
-                costContainer.appendChild(div);
+            costs.forEach(c => {
+                costContainer.innerHTML += `<div class="cost-item"><span>${c.l}</span><span>₹${c.v}</span></div>`;
             });
 
-            // Render Map
-            if (mapData && mapData.leaflet_points && mapData.leaflet_points.length > 0) {
-                renderMap(mapData);
-            }
+            // Map
+            if (mapData && mapData.leaflet_points.length > 0) renderMap(mapData);
 
-            // Render Day Cards
-            const daysContainer = document.getElementById('days-container');
-            days.forEach(day => {
-                const card = createDayCard(day);
-                daysContainer.appendChild(card);
-            });
-        }
-
-        function renderMap(data) {
-            // India Bounds to restrict panning
-            const southWest = L.latLng(6.0, 68.0);
-            const northEast = L.latLng(37.0, 97.0);
-            const indiaBounds = L.latLngBounds(southWest, northEast);
-
-            const center = data.center || [20.2961, 85.8245];
-            
-            // Initialize Map with Restrictions
-            const map = L.map('map', {
-                center: center,
-                zoom: 8,
-                minZoom: 5, 
-                maxBounds: indiaBounds,
-                maxBoundsViscosity: 1.0
-            });
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-            
-            const markers = [];
-            
-            (data.leaflet_points || []).forEach((point, index) => {
-                // Uniform Maroon Styling for ALL places
-                const customIcon = L.divIcon({
-                    className: 'custom-div-icon',
-                    // Maroon circle with White border and Gold number
-                    html: `<div class="custom-marker-pin">${index + 1}</div>`,
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16]
-                });
-
-                const marker = L.marker([point.lat, point.lng], { icon: customIcon })
-                    .addTo(map)
-                    .bindPopup(`<b>${index + 1}. ${point.name}</b>`);
-                
-                markers.push(marker);
-            });
-
-            // Draw Route - Black Graph Lines
-            if (data.coords_array && data.coords_array.length > 1) {
-                L.polyline(data.coords_array, {
-                    color: 'black', 
-                    weight: 4,      
-                    opacity: 0.8,
-                    smoothFactor: 1
-                }).addTo(map);
-            }
-
-            // Fit bounds
-            if (markers.length > 0) {
-                const group = L.featureGroup(markers);
-                map.fitBounds(group.getBounds().pad(0.1));
-            }
+            // Days
+            const container = document.getElementById('days-container');
+            days.forEach(day => container.appendChild(createDayCard(day)));
         }
 
         function createDayCard(day) {
             const card = document.createElement('div');
             card.className = 'day-card';
 
-            const destinations = (day.destinations || []).map(dest => `
+            const destHTML = day.destinations.map(d => {
+                // GET IMAGE BASED ON NAME
+                const imgUrl = getPlaceImage(d.name);
+                
+                return `
                 <div class="destination-item">
-                    <div class="destination-name">📍 ${dest.name}</div>
-                    <div class="destination-desc">${dest.description || 'Explore this beautiful destination'}</div>
-                    ${dest.entry_fee > 0 ? `<span class="entry-fee">Entry: ₹${dest.entry_fee}</span>` : '<span class="entry-fee">Free Entry</span>'}
-                </div>
-            `).join('');
-
-            const weather = day.weather || {};
-            const cost = day.cost_breakdown || {};
-            const tips = day.tips || [];
+                    <div class="dest-content">
+                        <div class="destination-name">📍 ${d.name}</div>
+                        <div class="destination-desc">${d.description}</div>
+                        ${d.entry_fee > 0 ? `<span class="entry-fee">Entry: ₹${d.entry_fee}</span>` : '<span class="entry-fee">Free Entry</span>'}
+                    </div>
+                    <div class="dest-image-container">
+                        <img src="${imgUrl}" alt="${d.name}" class="dest-image">
+                    </div>
+                </div>`;
+            }).join('');
 
             card.innerHTML = `
                 <div class="day-header">
                     <div class="day-number">Day ${day.day}</div>
-                    <div class="day-date">
-                        <div class="date-text">${day.date || 'N/A'}</div>
-                        <div class="day-name">${day.day_name || ''}</div>
-                    </div>
+                    <div class="date-text">${day.day_name}</div>
                 </div>
-
-                <div class="destinations">
-                    ${destinations}
-                </div>
-
+                <div class="destinations">${destHTML}</div>
                 <div class="day-info-grid">
-                    <div class="info-box">
-                        <div class="info-label">⏰ Schedule</div>
-                        <div class="info-value">${day.time_plan || 'Flexible timing'}</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">🌤️ Weather</div>
-                        <div class="info-value">${weather.summary || 'Pleasant weather expected'}</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">💰 Estimated Cost</div>
-                        <div class="info-value">₹${(cost.total_per_person_day || 0).toLocaleString('en-IN')}/person</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="info-label">🎒 Activities Budget</div>
-                        <div class="info-value">₹${(cost.activities || 0).toLocaleString('en-IN')}</div>
-                    </div>
+                    <div><div class="info-label">Schedule</div><div class="info-value">${day.time_plan}</div></div>
+                    <div><div class="info-label">Weather</div><div class="info-value">${day.weather.summary}</div></div>
+                    <div><div class="info-label">Est. Cost</div><div class="info-value">₹${day.cost_breakdown.total_per_person_day}</div></div>
+                    <div><div class="info-label">Activities</div><div class="info-value">₹${day.cost_breakdown.activities}</div></div>
                 </div>
-
-                ${tips.length > 0 ? `
-                    <div class="tips-section">
-                        <h4>💡 Tips for the Day</h4>
-                        <ul>
-                            ${tips.map(tip => `<li>${tip}</li>`).join('')}
-                        </ul>
-                    </div>
-                ` : ''}
+                ${day.tips.length ? `
+                <div class="tips-section">
+                    <div class="bulb-icon">💡</div>
+                    <ul class="tips-list">${day.tips.map(t => `<li>${t}</li>`).join('')}</ul>
+                </div>` : ''}
             `;
-
             return card;
         }
 
-        window.print = function() {
-            window.print();
-        };
+        function renderMap(data) {
+            const map = L.map('map', { center: data.center, zoom: 7, minZoom: 5 });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            
+            data.leaflet_points.forEach((p, i) => {
+                const icon = L.divIcon({
+                    className: 'custom-div-icon',
+                    html: `<div class="custom-marker-pin">${i+1}</div>`,
+                    iconSize: [32, 32], iconAnchor: [16, 16]
+                });
+                L.marker([p.lat, p.lng], {icon}).addTo(map).bindPopup(`<b>${p.name}</b>`);
+            });
+
+            if (data.coords_array.length > 1) {
+                L.polyline(data.coords_array, { color: 'black', weight: 4, opacity: 0.8 }).addTo(map);
+            }
+        }
     </script>
 </body>
 </html>

@@ -51,15 +51,47 @@
             position: relative;
         }
 
-        /* --- CSS TO REMOVE SPINNERS --- */
-        input[type=number]::-webkit-outer-spin-button,
-        input[type=number]::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
+        /* --- LOADING OVERLAY STYLES (NEW) --- */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 9999;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        input[type=number] {
-          -moz-appearance: textfield;
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--odia-cream);
+            border-top: 5px solid var(--odia-maroon);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
         }
+
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--odia-maroon);
+            font-weight: 700;
+        }
+
+        .loading-subtext {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* --- Sidebar Styling --- */
         .sidebar {
@@ -123,7 +155,6 @@
 
         .brand-content h1 {
             font-family: 'Cinzel', serif;
-            /* Slightly reduced font size to prevent cutting off */
             font-size: 3rem; 
             font-weight: 700;
             letter-spacing: 2px;
@@ -131,7 +162,6 @@
             color: var(--white);
             text-shadow: 0 4px 10px rgba(0,0,0,0.3);
             line-height: 1;
-            /* Added margin-right to push the centered text to the LEFT */
             margin-right: 25px; 
         }
 
@@ -224,6 +254,7 @@
             vertical-align: middle;
         }
 
+        /* General Input Styles */
         input[type="text"], 
         input[type="number"], 
         input[type="date"], 
@@ -239,10 +270,17 @@
             transition: all 0.3s ease;
         }
 
-        input[type="text"]:focus, 
-        input[type="number"]:focus, 
-        input[type="date"]:focus, 
-        textarea:focus {
+        /* Remove Spinners */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+
+        input:focus, textarea:focus {
             outline: none;
             background: var(--white);
             border-color: var(--odia-gold);
@@ -255,6 +293,95 @@
             background: #FFF5F5;
         }
 
+        /* --- TAG INPUT STYLES --- */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 2px solid #EAEAEA;
+            border-radius: 12px;
+            background: #FAFAFA;
+            min-height: 52px;
+            cursor: text;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tag-container:focus-within {
+            background: var(--white);
+            border-color: var(--odia-gold);
+            box-shadow: 0 4px 15px rgba(250, 163, 7, 0.15);
+        }
+
+        .tag-input {
+            flex: 1;
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            padding: 5px !important;
+            margin: 0 !important;
+            min-width: 150px;
+        }
+
+        .selected-tag {
+            display: flex;
+            align-items: center;
+            background: var(--odia-maroon);
+            color: var(--odia-gold);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        .tag-close {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            line-height: 1;
+            color: rgba(255,255,255,0.7);
+        }
+        .tag-close:hover { color: #fff; }
+
+        .suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            margin-top: 5px;
+        }
+
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-item:hover {
+            background: var(--odia-cream);
+            color: var(--odia-maroon);
+        }
+
+        .suggestion-item strong { color: var(--odia-maroon); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- Range Slider --- */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -271,9 +398,7 @@
             transition: background 0.3s;
         }
 
-        input[type=range]:hover::-webkit-slider-runnable-track {
-            background: #DDD;
-        }
+        input[type=range]:hover::-webkit-slider-runnable-track { background: #DDD; }
         
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -293,10 +418,7 @@
             background: var(--odia-maroon-light);
         }
 
-        .flex-row {
-            display: flex;
-            gap: 15px;
-        }
+        .flex-row { display: flex; gap: 15px; }
         .col { flex: 1; }
 
         .counter-box {
@@ -327,11 +449,7 @@
             font-size: 1.1rem;
         }
 
-        .chip-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+        .chip-container { display: flex; flex-wrap: wrap; gap: 12px; }
         
         .chip {
             padding: 10px 20px;
@@ -412,22 +530,10 @@
         .btn-generate:active { transform: translateY(-1px); }
         .btn-generate:disabled { opacity: 0.7; cursor: wait; transform: none; }
 
-        .btn-generate .spinner-small {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top: 2px solid var(--white);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 12px;
-            vertical-align: text-bottom;
-        }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        .error-message, .success-message {
+        .error-message {
             padding: 15px 20px;
             border-radius: 10px;
             margin-top: 25px;
@@ -435,20 +541,10 @@
             font-weight: 500;
             display: none;
             animation: slideUp 0.3s ease-out;
-        }
-
-        .error-message {
             background: #FFF2F2;
             color: #D90429;
             border: 1px solid #FFCDD2;
             border-left: 4px solid #D90429;
-        }
-
-        .success-message {
-            background: #F0FFF4;
-            color: #2D6A4F;
-            border: 1px solid #B7E4C7;
-            border-left: 4px solid #2D6A4F;
         }
 
         @media (max-width: 900px) {
@@ -462,6 +558,12 @@
     </style>
 </head>
 <body>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Consulting the Temple Archives...</div>
+        <div class="loading-subtext">Calculating best routes, checking availability, and crafting your journey.</div>
+    </div>
 
     <div class="container">
         
@@ -574,7 +676,10 @@
                     Places to Include (Mandatory)
                     <span class="required-star">*</span>
                 </label>
-                <input id="specific-places" type="text" placeholder="Eg: Konark Sun Temple, Chilika Lake..." required>
+                <div class="tag-container" id="tag-container">
+                    <input type="text" id="tag-input" class="tag-input" placeholder="Type places (e.g. Konark, Chilika)...">
+                    <div class="suggestions-list" id="suggestions"></div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -585,17 +690,141 @@
             <button class="btn-generate" id="submit-btn">✨ Create Itinerary</button>
             
             <div class="error-message" id="error-message"></div>
-            <div class="success-message" id="success-message"></div>
         </div>
     </div>
 
     <script>
         document.getElementById('start-date').valueAsDate = new Date();
 
+        // --- DATA for Autocomplete ---
+        const placesList = [
+            "Saila Srikhetra", "Budhi Thakurani Temple", "Talcher Palace", "Sleeping Vishnu", "Satkosia Gorge", 
+            "Gharial Research Centre", "Binikei Temple", "Deulajhari", "Malyagiri Hill", "Khuludi Waterfall",
+            "Sailashree Palace", "Bhima Dunguri", "Kumuda Pahada", "Siva Temple", "Pataneswari Temple",
+            "Somalai Temple", "Chausath Yogini Temple", "Indralath Temple", "Harishankar Temple", "Waterfall",
+            "Emami Jagannath Temple", "Fakir Mohan Senapati Museum", "Vanishing Beach", "Balaramgadi", "Talasari Beach",
+            "Bichitrapur Mangrove", "Khirachora Gopinath Temple", "Gargeswar Temple", "Panchalingeswar", "Nilagiri Palace",
+            "Maa Samaleswari Temple", "Hatapadia", "Nrusinghanath Temple", "Chal Dhar Waterfall", "Gangadhar Meher Memorial",
+            "Weaver's Colony", "Rice Bowl Monuments", "Local Market", "Debrigarh Wildlife Sanctuary", "Eco-Tourism Cottages",
+            "Bhadrakali Temple", "Eram", "Akhandalamani Temple", "River Ghat", "Dhamarai Temple", "Dhamra Port",
+            "River Jetty", "British Era Buildings", "Jagannath Temple", "Muslim Shrines", "Rameswar Temple",
+            "Giant Buddha Statue", "Bhairabi Temple", "Mahanadi View", "Jogindra Villa Palace", "Tel-Mahanadi Confluence",
+            "Chari Sambhu", "Rural Market", "Sarasara", "Hanuman Temple", "Barabati Fort", "Maritime Museum",
+            "Choudwar Fort Ruins", "Bhattarika Temple", "Charchika Temple", "Ansupa Lake", "Dhabaleswar Temple",
+            "Mahanadi View Point", "Madhabananda Temple", "Sobhaneswar Temple", "Pradhanpat Waterfall", "Basanta Niwas",
+            "Gohira Dam", "Local Forest", "Brahmani River View", "Roadside Amenities", "Kailash Palace", "Nature Camp",
+            "Rural Scenery", "Village Temple", "Kapilash Temple", "Saptasajya", "Mahima Gadi", "Dhuni Mandir",
+            "Ramial Dam", "Dadhibaman Temple", "Bullock Festival Ground", "Brass Metal Workshops", "Anantasayi Vishnu",
+            "River Bank", "Gajapati Palace", "B.N. Palace", "Jirang Monastery", "Tibetan Settlement", "Hill View",
+            "Tribal Market", "Mahendragiri Peak", "Pandava Temples", "Gandahati Waterfall", "Nature Camp", "Budhi Thakurani Temple",
+            "Silk City Market", "Gopalpur Beach", "Old Lighthouse", "Tara Tarini Temple", "Rushikulya River Bank",
+            "Chilika Lake (South)", "Narayani Temple", "Hot Sulphur Spring", "Deer Park", "Jagannath Temple",
+            "District Park", "Paradeep Port", "Sea Beach", "Sarala Temple", "Cultural Centre", "Gorakhnath Temple",
+            "Picnic Grove", "Gada Kujanga", "Rural Scenery", "Biraja Temple", "Dasaswamedha Ghat", "Mahavinayak Temple",
+            "Chandi Temple", "Buddhist Monastery", "ASI Museum", "Industrial Hub", "Market Area", "Buddhist Stupa",
+            "Step Well", "Pahadi Mandir", "Jhadeswar Temple", "Koilighugar Waterfall", "Park Area", "Mines View",
+            "Temple Complex", "Fort Ruins", "River Bank", "Power Plant View", "Reservoir", "Manikeswari Temple",
+            "Palace", "Karlapat Wildlife Sanctuary", "Phurlijharan", "Lankeswari Temple", "Fort Area", "Dokarichanchara",
+            "Gudahandi", "Indravati Dam", "View Point", "Putudi Waterfall", "Jagannath Temple", "Hill View Park",
+            "Coffee Plantations", "Patali Srikhetra", "Church", "Nature Camp", "Elephant Reserve", "Birupakshya Temple",
+            "Forest Area", "Baladevjew Temple", "Kendrapara Canal", "Bhitarkanika Gateway", "Crocodile Breeding Centre",
+            "Pentha Beach", "Geo-Tube Sea Wall", "Aul Palace", "Lakshmi Varaha Temple", "Hukitola Building", "Island View",
+            "Sanaghagara", "Badaghagara", "Tarini Temple", "Forest Drive", "Murga Mahadev", "Industrial Area",
+            "Khandadhar Falls", "Nature Trek", "Fresco Paintings", "Rock Formations", "Lingaraj Temple", "Udayagiri & Khandagiri Caves",
+            "Barunei Hill", "Railway Settlement", "Bhagabati Temple", "Dakhina Kali Temple", "Wetland Bird Sanctuary",
+            "Watch Tower Point", "Hot Spring", "Hatakeswar Temple", "Sabara Srikhetra", "Tribal Museum", "Jeypore Palace",
+            "Jagannath Sagar", "HAL Museum", "Deer Park", "Gupteswar Cave Temple", "River Side", "Deomali Peak",
+            "View Points", "Satiguda Dam", "Bhairavi Temple", "Balimela Dam", "Park", "Gurupriya Bridge", "Reservoir View",
+            "Mugabindu", "Confluence", "Ammakunda Waterfall", "Temple", "Jagannath Temple", "Similipal Gateway",
+            "Barehipani Falls", "Joranda Falls", "Kichakeswari Temple", "Museum", "Devkund Waterfall", "Ambika Temple",
+            "Aranya Nivas", "River Bed", "Bhandaragharani Temple", "Hirli Dongri", "Podagad", "Maa Pendrani Temple",
+            "Waterfall", "Forest Trek", "Sahid Stambha", "Deer Park", "Indravati Reservoir", "Dam View", "Ladubaba Temple",
+            "Raghunath Jew Temple", "Nilamadhav Temple", "Mahanadi River", "Kuanria Dam", "Satkosia Entry", "Raghunath Temple",
+            "Market", "Maninag Hill", "Jagannath Temple", "Patora Dam", "Yogeswar Temple", "Dadhibaman Temple", "Raja's Palace",
+            "Chura Pahar", "Rural Area", "Sunabeda Wildlife Sanctuary", "Waterfalls", "Budhikomna Temple", "Market",
+            "Jagannath Temple", "Golden Beach", "Sun Temple", "Chandrabhaga Beach", "Applique Craft Market", "Maa Barabhuji Temple",
+            "Heritage Art Village", "Gotipua Dance Academy", "Dolphin Point", "Sea Mouth Island", "Majhighariani Temple",
+            "Hanging Bridge", "Bhimpur", "Vamsadhara River", "Chatikona Falls", "Dongria Kondh Market", "Maa Markama Temple",
+            "Niyamgiri Hills", "Waterfall", "Picnic Spot", "Samaleswari Temple", "Ghanteswari Temple", "Hirakud Dam",
+            "Gandhi Minar", "Power Channel", "University Area", "Leaning Temple", "Mahanadi Fish", "Gudguda Waterfall",
+            "Tribal Market", "Subarnameru Temple", "Mahanadi Ghat", "Papakshay Ghat", "Kapileswar", "Pataneswari",
+            "Metakani Temple", "Patali Srikhetra", "Trekking Path", "Weaver's Village", "Market", "Hanuman Vatika",
+            "Steel Plant View", "District Museum", "Samaleswari Temple", "Vedavyas Temple", "Cave", "Mandira Dam",
+            "Picnic Spot", "Khandadhar (Sundargarh side)", "Boneswar Temple"
+        ];
+
+        // --- Tag Input Logic ---
+        const tagContainer = document.getElementById('tag-container');
+        const tagInput = document.getElementById('tag-input');
+        const suggestionsBox = document.getElementById('suggestions');
+        let selectedTags = [];
+
+        function createTag(label) {
+            const div = document.createElement('div');
+            div.className = 'selected-tag';
+            div.innerHTML = `${label} <span class="tag-close" onclick="removeTag(this, '${label}')">&times;</span>`;
+            tagContainer.insertBefore(div, tagInput);
+            selectedTags.push(label);
+            tagInput.value = '';
+            suggestionsBox.style.display = 'none';
+        }
+
+        window.removeTag = function(element, label) {
+            tagContainer.removeChild(element.parentElement);
+            selectedTags = selectedTags.filter(t => t !== label);
+        }
+
+        tagInput.addEventListener('input', function() {
+            const val = this.value.toLowerCase();
+            suggestionsBox.innerHTML = '';
+            if (!val) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+            const matches = placesList.filter(p => p.toLowerCase().includes(val) && !selectedTags.includes(p));
+            if (matches.length > 0) {
+                matches.slice(0, 8).forEach(match => { 
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    const regex = new RegExp(`(${val})`, 'gi');
+                    div.innerHTML = match.replace(regex, '<strong>$1</strong>');
+                    div.onclick = () => createTag(match);
+                    suggestionsBox.appendChild(div);
+                });
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        tagInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const val = this.value.trim();
+                if (val && !selectedTags.includes(val)) {
+                    createTag(val);
+                }
+            }
+            if (e.key === 'Backspace' && !this.value && selectedTags.length > 0) {
+                const lastTag = selectedTags[selectedTags.length - 1];
+                const tags = document.querySelectorAll('.selected-tag');
+                removeTag(tags[tags.length - 1].querySelector('.tag-close'), lastTag);
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!tagContainer.contains(e.target)) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        tagContainer.addEventListener('click', function(e) {
+            if (e.target === tagContainer) tagInput.focus();
+        });
+
         function updateTotalPeople() {
             const val = document.getElementById("people-range").value;
             document.getElementById("people-val").innerText = val + " People";
-            // Re-validate instantly when slider changes
             validateGroupComposition();
         }
 
@@ -613,24 +842,25 @@
 
         const API_URL = "http://localhost:8000/itinerary";
 
+        // --- SUBMIT LOGIC WITH REDIRECT FIX ---
         document.getElementById("submit-btn").addEventListener("click", async () => {
             const btn = document.getElementById("submit-btn");
             const errorMsg = document.getElementById("error-message");
-            const successMsg = document.getElementById("success-message");
+            const loadingOverlay = document.getElementById("loading-overlay");
             
+            // Clear previous error
             errorMsg.style.display = "none";
-            successMsg.style.display = "none";
 
-            // --- VALIDATION STEPS ---
-            const placesInput = document.getElementById("specific-places");
-            if (!placesInput.value.trim()) {
+            // --- VALIDATION ---
+            if (selectedTags.length === 0) {
                 errorMsg.textContent = "❌ Please specify at least one place to include.";
                 errorMsg.style.display = "block";
-                placesInput.classList.add("input-error"); 
-                placesInput.focus();
+                tagContainer.style.borderColor = "#D90429";
+                tagContainer.style.background = "#FFF5F5";
                 return;
             } else {
-                placesInput.classList.remove("input-error");
+                tagContainer.style.borderColor = "#EAEAEA";
+                tagContainer.style.background = "#FAFAFA";
             }
 
             const activeVibes = Array.from(document.querySelectorAll(".chip.active"));
@@ -640,7 +870,6 @@
                 return;
             }
 
-            // Group Validation Check
             const groupSize = parseInt(document.getElementById("people-range").value);
             const seniors = parseInt(document.getElementById("senior-count").value) || 0;
             const children = parseInt(document.getElementById("child-count").value) || 0;
@@ -652,26 +881,26 @@
                 return;
             }
 
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="spinner-small"></span>Crafting your journey...';
-            btn.disabled = true;
+            // --- 1. SHOW LOADING OVERLAY ---
+            loadingOverlay.style.display = "flex";
 
             try {
                 const payload = {
                     group_size: groupSize,
                     seniors: seniors,
                     children: children,
-                    specially_abled: abled, // Added new field
+                    specially_abled: abled,
                     duration: parseInt(document.getElementById("duration").value),
                     start_date: document.getElementById("start-date").value,
                     budget: parseInt(document.getElementById("budget-range").value),
-                    specific_places: placesInput.value,
+                    specific_places: selectedTags.join(", "), 
                     preferences: document.getElementById("preferences").value,
                     vibes: activeVibes.map(c => c.innerText.trim())
                 };
 
                 console.log("📤 Sending payload:", payload);
 
+                // --- 2. FETCH FROM BACKEND ---
                 const response = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -686,32 +915,32 @@
 
                 if (data.success) {
                     console.log("✅ Received itinerary:", data.data);
+                    
+                    // --- 3. SAVE DATA ---
                     localStorage.setItem('chakadola_itinerary', JSON.stringify(data.data));
-                    successMsg.textContent = "✅ Itinerary created! Redirecting...";
-                    successMsg.style.display = "block";
-                    setTimeout(() => {
-                        window.location.href = "results.html";
-                    }, 1000);
+                    
+                    // --- 4. REDIRECT ---
+                    window.location.href = "results.html";
                 } else {
                     throw new Error(data.message || "Failed to generate itinerary");
                 }
 
             } catch (error) {
                 console.error("❌ Error:", error);
+                
+                // --- 5. HIDE LOADER ON ERROR ---
+                loadingOverlay.style.display = "none";
+                
                 errorMsg.textContent = `❌ ${error.message || "Could not connect to server."}`;
                 errorMsg.style.display = "block";
-                btn.innerHTML = originalText;
-                btn.disabled = false;
             }
         });
 
+        // Validation Listeners
         document.getElementById("senior-count").addEventListener("input", validateGroupComposition);
         document.getElementById("child-count").addEventListener("input", validateGroupComposition);
         document.getElementById("abled-count").addEventListener("input", validateGroupComposition);
         document.getElementById("people-range").addEventListener("input", validateGroupComposition);
-        document.getElementById("specific-places").addEventListener("input", function() {
-            if(this.value.trim()) this.classList.remove("input-error");
-        });
 
         function validateGroupComposition() {
             const groupSize = parseInt(document.getElementById("people-range").value);

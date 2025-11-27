@@ -32,7 +32,7 @@ class GeminiLLM:
         for attempt in range(self.max_retries):
             try:
                 resp = self.client.chat.completions.create(
-                    model="gemini-2.5-flash",
+                    model="gemini-2.5-pro",
                     messages=[
                         {"role": "system", "content": "You are a helpful travel planning assistant for Odisha tourism. Be specific and culturally aware."},
                         {"role": "user", "content": prompt},
