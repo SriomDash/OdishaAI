@@ -20,10 +20,27 @@ import time
 
 class GeminiLLM:
     def __init__(self, api_key: str, max_retries: int = 3):
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-        )
+        # Initialize OpenAI client without proxies to avoid compatibility issues
+        # Some versions of OpenAI/httpx automatically pick up proxy env vars
+        # which can cause 'proxies' argument errors
+        try:
+            import httpx
+            # Create httpx client without proxies, explicitly disabling env var reading
+            http_client = httpx.Client(trust_env=False)
+            self.client = OpenAI(
+                api_key=api_key,
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+                http_client=http_client
+            )
+        except Exception as e:
+            # Fallback: try without custom http_client
+            try:
+                self.client = OpenAI(
+                    api_key=api_key,
+                    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+                )
+            except Exception as e2:
+                raise Exception(f"Failed to initialize OpenAI client: {e2}")
         self.max_retries = max_retries
         logger.info("✅ GeminiLLM initialized with retry logic.")
 
@@ -73,8 +90,16 @@ except Exception as e:
 # -------------------------------------------------------------------
 #  ChromaDB Client with Fallback
 # -------------------------------------------------------------------
-from chromadb import Client
-from chromadb.config import Settings
+try:
+    from chromadb import PersistentClient
+    CHROMA_NEW_API = True
+except ImportError:
+    try:
+        from chromadb import Client
+        from chromadb.config import Settings
+        CHROMA_NEW_API = False
+    except ImportError:
+        CHROMA_NEW_API = None
 
 CHROMA_DIR = "./odisha_chroma"
 COLLECTION_NAME = "odisha_tourism"
@@ -119,13 +144,21 @@ FALLBACK_PLACES = {
 }
 
 try:
-    chroma_client = Client(
-        Settings(
-            is_persistent=True,
-            persist_directory=CHROMA_DIR
+    if CHROMA_NEW_API is True:
+        # Use newer PersistentClient API
+        chroma_client = PersistentClient(path=CHROMA_DIR)
+        collection = chroma_client.get_collection(COLLECTION_NAME)
+    elif CHROMA_NEW_API is False:
+        # Use older Client API
+        chroma_client = Client(
+            Settings(
+                is_persistent=True,
+                persist_directory=CHROMA_DIR
+            )
         )
-    )
-    collection = chroma_client.get_collection(COLLECTION_NAME)
+        collection = chroma_client.get_collection(COLLECTION_NAME)
+    else:
+        raise ImportError("ChromaDB not available")
     logger.info("✅ Chroma collection loaded successfully.")
 except Exception as e:
     logger.warning(f"⚠️ ChromaDB unavailable, using fallback: {e}")
@@ -134,7 +167,7 @@ except Exception as e:
 # -------------------------------------------------------------------
 #  LangGraph Imports
 # -------------------------------------------------------------------
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import StateGraph, END
 
 # -------------------------------------------------------------------
 #  STATE MODEL (Enhanced)
@@ -589,13 +622,14 @@ def build_graph():
     graph.add_node("map_function", map_function)
     graph.add_node("final_function", final_function)
 
-    # Build flow
-    graph.add_edge(START, "context_function")
+    # Build flow - use set_entry_point instead of START
+    graph.set_entry_point("context_function")
     graph.add_edge("context_function", "main_function")
     graph.add_edge("main_function", "rag_function")
+    # rag_function connects to weather_cost first, then map
     graph.add_edge("rag_function", "weather_cost_function")
-    graph.add_edge("rag_function", "map_function")
-    graph.add_edge("weather_cost_function", "final_function")
+    graph.add_edge("weather_cost_function", "map_function")
+    # map feeds into final
     graph.add_edge("map_function", "final_function")
     graph.add_edge("final_function", END)
 

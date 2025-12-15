@@ -260,10 +260,31 @@
         if (stored) {
             try {
                 const decoded = JSON.parse(stored);
-                itineraryData = decoded.itinerary;
-                mapData = decoded.map_data;
+                
+                // Backend returns: { success: true, data: { itinerary: {...}, map_data: {...} } }
+                // Extract the nested structure properly
+                if (decoded.data && decoded.data.itinerary) {
+                    itineraryData = decoded.data.itinerary;
+                    // Use map_data from data level, fallback to itinerary.map_data
+                    mapData = decoded.data.map_data || decoded.data.itinerary.map_data || null;
+                } else if (decoded.itinerary) {
+                    // Fallback: if structure is different
+                    itineraryData = decoded.itinerary;
+                    mapData = decoded.map_data || decoded.map || null;
+                } else {
+                    // Direct structure (old format)
+                    itineraryData = decoded;
+                    mapData = decoded.map_data || decoded.map || null;
+                }
+
+                console.log("📊 Extracted itinerary data:", itineraryData);
+                console.log("🗺️ Extracted map data:", mapData);
+
                 renderItinerary();
-            } catch (e) { console.error("Error parsing data", e); }
+            } catch (e) { 
+                console.error("❌ Error parsing data", e);
+                document.getElementById('loading').innerHTML = `<h3>Error loading data: ${e.message}</h3>`;
+            }
         } else {
             document.getElementById('loading').innerHTML = '<h3>No Data Found. Please go back.</h3>';
         }
@@ -272,93 +293,152 @@
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
 
-            const summary = itineraryData.trip_summary || {};
+            // Extract data from the correct nested structure
+            const summary = itineraryData.trip_summary || itineraryData.summary || {};
             const days = itineraryData.days || [];
-            const costSummary = itineraryData.cost_summary || {};
+            const costSummary = itineraryData.cost_summary || itineraryData.costs || {};
+
+
 
             // Stats
-            document.getElementById('duration-stat').innerText = `${summary.duration} Days`;
-            document.getElementById('places-stat').innerText = summary.total_places;
-            document.getElementById('group-stat').innerText = `${summary.group_size} People`;
-            document.getElementById('type-stat').innerText = summary.vibes[0] || 'Mixed';
+            document.getElementById("duration-stat").innerText =
+            summary.duration ? `${summary.duration} Days` : summary.duration_days ? `${summary.duration_days} Days` : "-";
+
+            document.getElementById("places-stat").innerText =
+            summary.total_places ?? "-";
+
+            document.getElementById("group-stat").innerText =
+            summary.group_size ? `${summary.group_size} People` : "-";
+
+            document.getElementById("type-stat").innerText =
+            (summary.vibes && Array.isArray(summary.vibes) ? summary.vibes.join(", ") : summary.vibes) || "Mixed";
+
 
             // Cost
             const costContainer = document.getElementById('cost-items');
             const costs = [
-                { l: 'Stay', v: costSummary.stay },
-                { l: 'Travel', v: costSummary.travel },
-                { l: 'Food', v: costSummary.food },
-                { l: 'Total / Day', v: costSummary.total_per_person_day }
+                { l: 'Stay', v: costSummary.stay || 0 },
+                { l: 'Travel', v: costSummary.travel || 0 },
+                { l: 'Food', v: costSummary.food || 0 },
+                { l: 'Total / Day', v: costSummary.total_per_person_day || 0 }
             ];
             costs.forEach(c => {
-                costContainer.innerHTML += `<div class="cost-item"><span>${c.l}</span><span>₹${c.v}</span></div>`;
+                const value = c.v || 0;
+                costContainer.innerHTML += `<div class="cost-item"><span>${c.l}</span><span>₹${value.toLocaleString('en-IN')}</span></div>`;
             });
 
             // Map
-            if (mapData && mapData.leaflet_points.length > 0) renderMap(mapData);
+            if (mapData && mapData.leaflet_points && mapData.leaflet_points.length > 0) {
+                renderMap(mapData);
+            } else {
+                console.warn("⚠️ Map data not available or incomplete");
+                document.querySelector('.map-section').innerHTML = '<h2>📍 Route Map</h2><p>Map data unavailable</p>';
+            }
 
             // Days
             const container = document.getElementById('days-container');
-            days.forEach(day => container.appendChild(createDayCard(day)));
+            if (days && days.length > 0) {
+                days.forEach(day => {
+                    try {
+                        container.appendChild(createDayCard(day));
+                    } catch (e) {
+                        console.error("Error creating day card:", e, day);
+                    }
+                });
+            } else {
+                container.innerHTML = '<p>No itinerary days found.</p>';
+            }
         }
 
         function createDayCard(day) {
             const card = document.createElement('div');
             card.className = 'day-card';
 
-            const destHTML = day.destinations.map(d => {
+            // Handle destinations safely
+            const destinations = day.destinations || [];
+            const destHTML = destinations.map(d => {
                 // GET IMAGE BASED ON NAME
-                const imgUrl = getPlaceImage(d.name);
+                const imgUrl = getPlaceImage(d.name || '');
+                const entryFee = d.entry_fee || 0;
                 
                 return `
                 <div class="destination-item">
                     <div class="dest-content">
-                        <div class="destination-name">📍 ${d.name}</div>
-                        <div class="destination-desc">${d.description}</div>
-                        ${d.entry_fee > 0 ? `<span class="entry-fee">Entry: ₹${d.entry_fee}</span>` : '<span class="entry-fee">Free Entry</span>'}
+                        <div class="destination-name">📍 ${d.name || 'Unknown Place'}</div>
+                        <div class="destination-desc">${d.description || 'No description available'}</div>
+                        ${entryFee > 0 ? `<span class="entry-fee">Entry: ₹${entryFee}</span>` : '<span class="entry-fee">Free Entry</span>'}
                     </div>
                     <div class="dest-image-container">
-                        <img src="${imgUrl}" alt="${d.name}" class="dest-image">
+                        <img src="${imgUrl}" alt="${d.name || ''}" class="dest-image">
                     </div>
                 </div>`;
             }).join('');
 
-            card.innerHTML = `
-                <div class="day-header">
-                    <div class="day-number">Day ${day.day}</div>
-                    <div class="date-text">${day.day_name}</div>
-                </div>
-                <div class="destinations">${destHTML}</div>
-                <div class="day-info-grid">
-                    <div><div class="info-label">Schedule</div><div class="info-value">${day.time_plan}</div></div>
-                    <div><div class="info-label">Weather</div><div class="info-value">${day.weather.summary}</div></div>
-                    <div><div class="info-label">Est. Cost</div><div class="info-value">₹${day.cost_breakdown.total_per_person_day}</div></div>
-                    <div><div class="info-label">Activities</div><div class="info-value">₹${day.cost_breakdown.activities}</div></div>
-                </div>
-                ${day.tips.length ? `
+            // Handle weather safely
+            const weather = day.weather || {};
+            const weatherSummary = weather.summary || 'Weather data unavailable';
+
+            // Handle cost breakdown safely
+            const costBreakdown = day.cost_breakdown || {};
+            const totalCost = costBreakdown.total_per_person_day || 0;
+            const activitiesCost = costBreakdown.activities || 0;
+
+            // Handle tips safely
+            const tips = day.tips || [];
+            const tipsHTML = tips.length > 0 ? `
                 <div class="tips-section">
                     <div class="bulb-icon">💡</div>
-                    <ul class="tips-list">${day.tips.map(t => `<li>${t}</li>`).join('')}</ul>
-                </div>` : ''}
+                    <ul class="tips-list">${tips.map(t => `<li>${t}</li>`).join('')}</ul>
+                </div>` : '';
+
+            card.innerHTML = `
+                <div class="day-header">
+                    <div class="day-number">Day ${day.day || '?'}</div>
+                    <div class="date-text">${day.day_name || day.date || ''}</div>
+                </div>
+                <div class="destinations">${destHTML || '<p>No destinations planned for this day.</p>'}</div>
+                <div class="day-info-grid">
+                    <div><div class="info-label">Schedule</div><div class="info-value">${day.time_plan || 'Not specified'}</div></div>
+                    <div><div class="info-label">Weather</div><div class="info-value">${weatherSummary}</div></div>
+                    <div><div class="info-label">Est. Cost</div><div class="info-value">₹${totalCost.toLocaleString('en-IN')}</div></div>
+                    <div><div class="info-label">Activities</div><div class="info-value">₹${activitiesCost.toLocaleString('en-IN')}</div></div>
+                </div>
+                ${tipsHTML}
             `;
             return card;
         }
 
         function renderMap(data) {
-            const map = L.map('map', { center: data.center, zoom: 7, minZoom: 5 });
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            
-            data.leaflet_points.forEach((p, i) => {
-                const icon = L.divIcon({
-                    className: 'custom-div-icon',
-                    html: `<div class="custom-marker-pin">${i+1}</div>`,
-                    iconSize: [32, 32], iconAnchor: [16, 16]
-                });
-                L.marker([p.lat, p.lng], {icon}).addTo(map).bindPopup(`<b>${p.name}</b>`);
-            });
+            try {
+                // Default center to Odisha if not provided
+                const center = data.center || [20.2961, 85.8245];
+                const map = L.map('map', { center: center, zoom: 7, minZoom: 5 });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                
+                // Add markers
+                if (data.leaflet_points && Array.isArray(data.leaflet_points) && data.leaflet_points.length > 0) {
+                    data.leaflet_points.forEach((p, i) => {
+                        if (p.lat && p.lng) {
+                            const icon = L.divIcon({
+                                className: 'custom-div-icon',
+                                html: `<div class="custom-marker-pin">${i+1}</div>`,
+                                iconSize: [32, 32], 
+                                iconAnchor: [16, 16]
+                            });
+                            L.marker([p.lat, p.lng], {icon}).addTo(map).bindPopup(`<b>${p.name || 'Location'}</b>`);
+                        }
+                    });
 
-            if (data.coords_array.length > 1) {
-                L.polyline(data.coords_array, { color: 'black', weight: 4, opacity: 0.8 }).addTo(map);
+                    // Add route polyline
+                    if (data.coords_array && Array.isArray(data.coords_array) && data.coords_array.length > 1) {
+                        L.polyline(data.coords_array, { color: '#6A040F', weight: 4, opacity: 0.8 }).addTo(map);
+                    }
+                } else {
+                    console.warn("⚠️ No valid leaflet_points found in map data");
+                }
+            } catch (e) {
+                console.error("❌ Error rendering map:", e);
+                document.querySelector('#map').innerHTML = '<p>Error loading map</p>';
             }
         }
     </script>

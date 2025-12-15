@@ -2,7 +2,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from models import ItineraryForm
+from chakadola_voice_agent.router import router as voice_router
 import logging
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 try:
@@ -26,8 +30,11 @@ app.add_middleware(
     allow_origins=["*"],  # In production, specify your frontend domain
     allow_methods=["*"],
     allow_headers=["*"],
-    allow_credentials=True
+    allow_credentials=False,  # Cannot use credentials with wildcard origins
 )
+
+# Routers
+app.include_router(voice_router)
 
 @app.get("/")
 async def root():

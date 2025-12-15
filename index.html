@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chakadola Yatra | Odisha Travel Planner</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&family=Baloo+2:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -22,7 +25,11 @@
             --radius: 20px;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -60,7 +67,8 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.95);
             z-index: 9999;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -91,7 +99,15 @@
             margin-top: 10px;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         /* --- Sidebar Styling --- */
         .sidebar {
@@ -112,10 +128,13 @@
         .sidebar::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                radial-gradient(circle at 100% 100%, transparent 10px, rgba(255,255,255,0.05) 11px, transparent 12px),
-                radial-gradient(circle at 0% 0%, transparent 10px, rgba(255,255,255,0.05) 11px, transparent 12px);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 100% 100%, transparent 10px, rgba(255, 255, 255, 0.05) 11px, transparent 12px),
+                radial-gradient(circle at 0% 0%, transparent 10px, rgba(255, 255, 255, 0.05) 11px, transparent 12px);
             background-size: 40px 40px;
             opacity: 0.4;
             pointer-events: none;
@@ -144,8 +163,13 @@
         }
 
         @keyframes rotateWheel {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .brand-content {
@@ -155,14 +179,14 @@
 
         .brand-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3rem; 
+            font-size: 3rem;
             font-weight: 700;
             letter-spacing: 2px;
             margin-bottom: 5px;
             color: var(--white);
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             line-height: 1;
-            margin-right: 25px; 
+            margin-right: 25px;
         }
 
         .odia-script {
@@ -177,7 +201,7 @@
         .decorative-line {
             height: 3px;
             background: var(--odia-maroon-light);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
             margin: 20px auto 40px auto;
             width: 50%;
             opacity: 0.8;
@@ -191,9 +215,9 @@
             opacity: 0.9;
             margin-top: auto;
             line-height: 1.6;
-            border-top: 1px solid rgba(255,255,255,0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             background: transparent;
             z-index: 2;
         }
@@ -207,10 +231,22 @@
             background: var(--white);
         }
 
-        .form-section::-webkit-scrollbar { width: 8px; }
-        .form-section::-webkit-scrollbar-track { background: transparent; }
-        .form-section::-webkit-scrollbar-thumb { background: #eee; border-radius: 4px; }
-        .form-section::-webkit-scrollbar-thumb:hover { background: #ddd; }
+        .form-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-section::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .form-section::-webkit-scrollbar-thumb {
+            background: #eee;
+            border-radius: 4px;
+        }
+
+        .form-section::-webkit-scrollbar-thumb:hover {
+            background: #ddd;
+        }
 
         h2 {
             font-family: 'Cinzel', serif;
@@ -220,7 +256,7 @@
             position: relative;
             display: inline-block;
         }
-        
+
         h2::after {
             content: '';
             position: absolute;
@@ -232,7 +268,9 @@
             border-radius: 2px;
         }
 
-        .form-group { margin-bottom: 30px; }
+        .form-group {
+            margin-bottom: 30px;
+        }
 
         label {
             display: flex;
@@ -255,9 +293,9 @@
         }
 
         /* General Input Styles */
-        input[type="text"], 
-        input[type="number"], 
-        input[type="date"], 
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
         textarea {
             width: 100%;
             padding: 14px 18px;
@@ -273,14 +311,16 @@
         /* Remove Spinners */
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        input[type=number] {
-          -moz-appearance: textfield;
+            -webkit-appearance: none;
+            margin: 0;
         }
 
-        input:focus, textarea:focus {
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input:focus,
+        textarea:focus {
             outline: none;
             background: var(--white);
             border-color: var(--odia-gold);
@@ -342,9 +382,12 @@
             font-weight: bold;
             font-size: 1rem;
             line-height: 1;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
-        .tag-close:hover { color: #fff; }
+
+        .tag-close:hover {
+            color: #fff;
+        }
 
         .suggestions-list {
             position: absolute;
@@ -357,7 +400,7 @@
             max-height: 200px;
             overflow-y: auto;
             z-index: 100;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: none;
             margin-top: 5px;
         }
@@ -374,11 +417,20 @@
             color: var(--odia-maroon);
         }
 
-        .suggestion-item strong { color: var(--odia-maroon); }
+        .suggestion-item strong {
+            color: var(--odia-maroon);
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* --- Range Slider --- */
@@ -388,7 +440,7 @@
             background: transparent;
             margin: 15px 0 5px 0;
         }
-        
+
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
             height: 6px;
@@ -398,8 +450,10 @@
             transition: background 0.3s;
         }
 
-        input[type=range]:hover::-webkit-slider-runnable-track { background: #DDD; }
-        
+        input[type=range]:hover::-webkit-slider-runnable-track {
+            background: #DDD;
+        }
+
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 24px;
@@ -407,9 +461,9 @@
             border-radius: 50%;
             background: var(--odia-maroon);
             border: 3px solid var(--white);
-            box-shadow: 0 0 0 2px var(--odia-gold), 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 2px var(--odia-gold), 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            margin-top: -9px; 
+            margin-top: -9px;
             transition: transform 0.2s;
         }
 
@@ -418,8 +472,14 @@
             background: var(--odia-maroon-light);
         }
 
-        .flex-row { display: flex; gap: 15px; }
-        .col { flex: 1; }
+        .flex-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
 
         .counter-box {
             background: var(--white);
@@ -431,7 +491,7 @@
             justify-content: center;
             transition: border-color 0.3s;
         }
-        
+
         .counter-box:focus-within {
             border-color: var(--odia-gold);
             box-shadow: 0 4px 15px rgba(250, 163, 7, 0.15);
@@ -449,8 +509,12 @@
             font-size: 1.1rem;
         }
 
-        .chip-container { display: flex; flex-wrap: wrap; gap: 12px; }
-        
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
         .chip {
             padding: 10px 20px;
             border: 1px solid #EAEAEA;
@@ -463,15 +527,15 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             user-select: none;
         }
-        
+
         .chip:hover {
             transform: translateY(-2px);
             background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             border-color: var(--odia-gold);
             color: var(--odia-gold-dim);
         }
-        
+
         .chip.active {
             background: var(--odia-maroon);
             color: var(--odia-sand);
@@ -509,14 +573,15 @@
             overflow: hidden;
             box-shadow: 0 10px 25px -5px rgba(106, 4, 15, 0.4);
         }
-        
+
         .btn-generate::after {
             content: "";
             position: absolute;
-            top: 0; left: -100%;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: 0.5s;
         }
 
@@ -524,14 +589,42 @@
             transform: translateY(-3px);
             box-shadow: 0 15px 30px -5px rgba(106, 4, 15, 0.5);
         }
-        
-        .btn-generate:hover::after { left: 100%; }
-        
-        .btn-generate:active { transform: translateY(-1px); }
-        .btn-generate:disabled { opacity: 0.7; cursor: wait; transform: none; }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-generate:hover::after {
+            left: 100%;
+        }
+
+        .btn-generate:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         .error-message {
             padding: 15px 20px;
@@ -547,16 +640,138 @@
             border-left: 4px solid #D90429;
         }
 
+        /* --- Voice Agent Card --- */
+        .voice-card {
+            background: #fffaf3;
+            border: 1px solid rgba(250, 163, 7, 0.35);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 18px rgba(106, 4, 15, 0.08);
+        }
+
+        .voice-card h3 {
+            margin-bottom: 8px;
+            color: var(--odia-maroon);
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voice-subtext {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .voice-btn,
+        .voice-apply-btn {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 6px 16px rgba(106, 4, 15, 0.12);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .voice-btn {
+            background: linear-gradient(135deg, var(--odia-maroon), #500000);
+            color: white;
+        }
+
+        .voice-btn.listening {
+            background: #c21807;
+        }
+
+        .voice-btn:hover,
+        .voice-apply-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(106, 4, 15, 0.18);
+        }
+
+        .voice-apply-btn {
+            background: #f3ead9;
+            color: var(--odia-maroon);
+            border: 1px solid rgba(106, 4, 15, 0.2);
+        }
+
+        .voice-apply-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .voice-status {
+            font-weight: 600;
+            color: var(--odia-maroon);
+        }
+
+        .voice-panel {
+            margin-top: 12px;
+            background: white;
+            border: 1px dashed rgba(106, 4, 15, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .voice-panel pre {
+            background: #fff5e6;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
         @media (max-width: 900px) {
-            .container { flex-direction: column; max-width: 600px; }
-            .sidebar { width: 100%; padding: 40px 30px; min-height: 300px; justify-content: center; }
-            .chakra-container { left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0.3; width: 400px; height: 400px; }
-            .form-section { width: 100%; padding: 40px 30px; max-height: none; }
-            .flex-row { flex-direction: column; gap: 20px; }
-            h1 { font-size: 2.8rem; }
+            .container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 40px 30px;
+                min-height: 300px;
+                justify-content: center;
+            }
+
+            .chakra-container {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0.3;
+                width: 400px;
+                height: 400px;
+            }
+
+            .form-section {
+                width: 100%;
+                padding: 40px 30px;
+                max-height: none;
+            }
+
+            .flex-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div id="loading-overlay" class="loading-overlay">
@@ -566,15 +781,15 @@
     </div>
 
     <div class="container">
-        
+
         <div class="sidebar">
             <div class="chakra-container">
                 <svg class="chakra-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="95" stroke-width="2"/>
-                    <circle cx="100" cy="100" r="88" stroke-width="4"/>
-                    <circle cx="100" cy="100" r="80" stroke-width="1" stroke-dasharray="2 2"/>
-                    <circle cx="100" cy="100" r="15" fill="var(--odia-gold)" fill-opacity="0.3"/>
-                    <circle cx="100" cy="100" r="22" stroke-width="3"/>
+                    <circle cx="100" cy="100" r="95" stroke-width="2" />
+                    <circle cx="100" cy="100" r="88" stroke-width="4" />
+                    <circle cx="100" cy="100" r="80" stroke-width="1" stroke-dasharray="2 2" />
+                    <circle cx="100" cy="100" r="15" fill="var(--odia-gold)" fill-opacity="0.3" />
+                    <circle cx="100" cy="100" r="22" stroke-width="3" />
                     <g stroke-width="5" stroke-linecap="butt">
                         <line x1="100" y1="22" x2="100" y2="178" transform="rotate(0, 100, 100)" />
                         <line x1="100" y1="22" x2="100" y2="178" transform="rotate(45, 100, 100)" />
@@ -600,9 +815,11 @@
                 <h1>CHAKADOLA</h1>
                 <div class="odia-script">ଚକାଡୋଳା ଯାତ୍ରା</div>
                 <div class="decorative-line"></div>
-                <p style="letter-spacing: 3px; font-size: 0.75rem; text-transform: uppercase; font-weight: 500; color: var(--odia-sand);">Divine Odisha Journeys</p>
+                <p
+                    style="letter-spacing: 3px; font-size: 0.75rem; text-transform: uppercase; font-weight: 500; color: var(--odia-sand);">
+                    Divine Odisha Journeys</p>
             </div>
-            
+
             <div class="brand-content quote">
                 "From the architecture of Konark to the spirituality of Puri."
             </div>
@@ -610,6 +827,25 @@
 
         <div class="form-section">
             <h2>Plan Your Sacred Journey</h2>
+
+            <div class="voice-card">
+                <h3>🎤 Voice Assistant (Odia / English)</h3>
+                <div class="voice-subtext">Speak your trip details in Odia or English. We transcribe, extract trip info,
+                    and auto-fill the form for you to review.</div>
+                <div class="voice-controls">
+                    <button id="voice-btn" class="voice-btn">🎙️ Start Recording</button>
+                    <button id="voice-apply-btn" class="voice-apply-btn" disabled>📋 Apply to Form</button>
+                    <span class="voice-status" id="voice-status">Idle</span>
+                </div>
+                <div class="voice-panel" id="voice-panel" style="display:none;">
+                    <div><strong>English Transcript:</strong> <span id="voice-transcript">—</span></div>
+                    <div style="margin-top:8px;"><strong>Extracted Fields:</strong>
+                        <pre id="voice-json">—</pre>
+                    </div>
+                    <div class="voice-subtext" style="margin-top:6px;">Please review and adjust any field if needed
+                        before submitting.</div>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label>
@@ -627,7 +863,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <label>Children (<12)</label>
+                    <label>Children (&lt;12)</label>
                     <div class="counter-box">
                         <input id="child-count" type="number" min="0" value="0" placeholder="0">
                     </div>
@@ -656,7 +892,8 @@
                     Estimated Budget
                     <span id="budget-val" class="value-display">₹15,000</span>
                 </label>
-                <input id="budget-range" type="range" min="5000" max="200000" step="1000" value="15000" oninput="updateBudget()">
+                <input id="budget-range" type="range" min="5000" max="200000" step="1000" value="15000"
+                    oninput="updateBudget()">
             </div>
 
             <div class="form-group">
@@ -677,18 +914,20 @@
                     <span class="required-star">*</span>
                 </label>
                 <div class="tag-container" id="tag-container">
-                    <input type="text" id="tag-input" class="tag-input" placeholder="Type places (e.g. Konark, Chilika)...">
+                    <input type="text" id="tag-input" class="tag-input"
+                        placeholder="Type places (e.g. Konark, Chilika)...">
                     <div class="suggestions-list" id="suggestions"></div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Additional Preferences</label>
-                <textarea id="preferences" rows="2" placeholder="Eg: Pure Veg Food, Wheelchair accessibility..."></textarea>
+                <textarea id="preferences" rows="2"
+                    placeholder="Eg: Pure Veg Food, Wheelchair accessibility..."></textarea>
             </div>
 
             <button class="btn-generate" id="submit-btn">✨ Create Itinerary</button>
-            
+
             <div class="error-message" id="error-message"></div>
         </div>
     </div>
@@ -698,7 +937,7 @@
 
         // --- DATA for Autocomplete ---
         const placesList = [
-            "Saila Srikhetra", "Budhi Thakurani Temple", "Talcher Palace", "Sleeping Vishnu", "Satkosia Gorge", 
+            "Saila Srikhetra", "Budhi Thakurani Temple", "Talcher Palace", "Sleeping Vishnu", "Satkosia Gorge",
             "Gharial Research Centre", "Binikei Temple", "Deulajhari", "Malyagiri Hill", "Khuludi Waterfall",
             "Sailashree Palace", "Bhima Dunguri", "Kumuda Pahada", "Siva Temple", "Pataneswari Temple",
             "Somalai Temple", "Chausath Yogini Temple", "Indralath Temple", "Harishankar Temple", "Waterfall",
@@ -769,12 +1008,12 @@
             suggestionsBox.style.display = 'none';
         }
 
-        window.removeTag = function(element, label) {
+        window.removeTag = function (element, label) {
             tagContainer.removeChild(element.parentElement);
             selectedTags = selectedTags.filter(t => t !== label);
         }
 
-        tagInput.addEventListener('input', function() {
+        tagInput.addEventListener('input', function () {
             const val = this.value.toLowerCase();
             suggestionsBox.innerHTML = '';
             if (!val) {
@@ -783,7 +1022,7 @@
             }
             const matches = placesList.filter(p => p.toLowerCase().includes(val) && !selectedTags.includes(p));
             if (matches.length > 0) {
-                matches.slice(0, 8).forEach(match => { 
+                matches.slice(0, 8).forEach(match => {
                     const div = document.createElement('div');
                     div.className = 'suggestion-item';
                     const regex = new RegExp(`(${val})`, 'gi');
@@ -797,7 +1036,7 @@
             }
         });
 
-        tagInput.addEventListener('keydown', function(e) {
+        tagInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const val = this.value.trim();
@@ -812,13 +1051,13 @@
             }
         });
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!tagContainer.contains(e.target)) {
                 suggestionsBox.style.display = 'none';
             }
         });
 
-        tagContainer.addEventListener('click', function(e) {
+        tagContainer.addEventListener('click', function (e) {
             if (e.target === tagContainer) tagInput.focus();
         });
 
@@ -835,19 +1074,178 @@
         }
 
         document.querySelectorAll('.chip').forEach(chip => {
-            chip.addEventListener('click', function() {
+            chip.addEventListener('click', function () {
                 this.classList.toggle('active');
             });
         });
 
-        const API_URL = "http://localhost:8000/itinerary";
+        // --- VOICE AGENT LOGIC ---
+        const voiceBtn = document.getElementById("voice-btn");
+        const voiceApplyBtn = document.getElementById("voice-apply-btn");
+        const voiceStatus = document.getElementById("voice-status");
+        const voicePanel = document.getElementById("voice-panel");
+        const voiceTranscriptEl = document.getElementById("voice-transcript");
+        const voiceJsonEl = document.getElementById("voice-json");
+
+        let mediaRecorder = null;
+        let voiceChunks = [];
+        let voiceData = null;
+
+        voiceBtn.addEventListener("click", async () => {
+            if (!mediaRecorder || mediaRecorder.state === "inactive") {
+                await startVoiceRecording();
+            } else if (mediaRecorder.state === "recording") {
+                stopVoiceRecording();
+            }
+        });
+
+        voiceApplyBtn.addEventListener("click", () => {
+            if (voiceData) {
+                applyVoiceDataToForm(voiceData);
+                voiceStatus.textContent = "Applied to form. Please verify before submitting.";
+            }
+        });
+
+        async function startVoiceRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                voiceChunks = [];
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) voiceChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const blob = new Blob(voiceChunks, { type: "audio/webm" });
+                    stream.getTracks().forEach(t => t.stop());
+                    await sendVoiceForProcessing(blob);
+                };
+
+                mediaRecorder.start();
+                voiceStatus.textContent = "Listening... click again to stop.";
+                voiceBtn.textContent = "⏹️ Stop Recording";
+                voiceBtn.classList.add("listening");
+            } catch (err) {
+                voiceStatus.textContent = "Microphone access denied.";
+                console.error(err);
+            }
+        }
+
+        function stopVoiceRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                voiceStatus.textContent = "Processing voice... translating to English...";
+                voiceBtn.textContent = "🎙️ Start Recording";
+                voiceBtn.classList.remove("listening");
+            }
+        }
+
+        async function sendVoiceForProcessing(blob) {
+            voiceApplyBtn.disabled = true;
+            voicePanel.style.display = "block";
+            voiceTranscriptEl.textContent = "Translating to English...";
+            voiceJsonEl.textContent = "Extracting trip details...";
+
+            const formData = new FormData();
+            formData.append("file", blob, "voice.webm");
+
+            try {
+                const resp = await fetch(VOICE_API_URL, { method: "POST", body: formData });
+                if (!resp.ok) {
+                    const msg = await resp.text();
+                    throw new Error(msg || "Voice service error");
+                }
+                const data = await resp.json();
+                voiceData = data;
+
+                voiceTranscriptEl.textContent = data.transcript || "No transcript returned";
+                voiceJsonEl.textContent = JSON.stringify(data, null, 2);
+                voiceStatus.textContent = "Voice processed. Review and apply.";
+                voiceApplyBtn.disabled = false;
+            } catch (e) {
+                console.error("Voice processing failed", e);
+                voiceStatus.textContent = `Voice error: ${e.message}`;
+                voiceTranscriptEl.textContent = "—";
+                voiceJsonEl.textContent = "—";
+                voiceApplyBtn.disabled = true;
+            }
+        }
+
+        function applyVoiceDataToForm(data) {
+            // numeric fields
+            if (data.group_size) {
+                document.getElementById("people-range").value = data.group_size;
+                updateTotalPeople();
+            }
+            if (data.seniors !== null && data.seniors !== undefined) {
+                document.getElementById("senior-count").value = data.seniors;
+            }
+            if (data.children !== null && data.children !== undefined) {
+                document.getElementById("child-count").value = data.children;
+            }
+            if (data.specially_abled !== null && data.specially_abled !== undefined) {
+                document.getElementById("abled-count").value = data.specially_abled;
+            } else if (data.abled !== null && data.abled !== undefined) {
+                document.getElementById("abled-count").value = data.abled;
+            } else if (data.specially_abled_count !== null && data.specially_abled_count !== undefined) {
+                document.getElementById("abled-count").value = data.specially_abled_count;
+            }
+            if (data.duration) {
+                document.getElementById("duration").value = data.duration;
+            }
+            if (data.budget) {
+                document.getElementById("budget-range").value = data.budget;
+                updateBudget();
+            }
+
+            // date parsing (best-effort)
+            if (data.start_date) {
+                const parsed = new Date(data.start_date);
+                if (!isNaN(parsed.getTime())) {
+                    document.getElementById("start-date").value = parsed.toISOString().split("T")[0];
+                }
+            }
+
+            // vibes → chips
+            if (data.vibes && Array.isArray(data.vibes)) {
+                const chips = document.querySelectorAll(".chip");
+                chips.forEach(chip => chip.classList.remove("active"));
+                data.vibes.forEach(v => {
+                    chips.forEach(chip => {
+                        if (chip.innerText.toLowerCase().includes(v.toLowerCase())) {
+                            chip.classList.add("active");
+                        }
+                    });
+                });
+            }
+
+            // specific places → tags
+            if (data.specific_places) {
+                // clear existing tags
+                document.querySelectorAll('.selected-tag').forEach(t => t.remove());
+                selectedTags = [];
+                data.specific_places.split(",").forEach(place => {
+                    const clean = place.trim();
+                    if (clean) createTag(clean);
+                });
+            }
+
+            // preferences textarea
+            if (data.preferences) {
+                document.getElementById("preferences").value = data.preferences;
+            }
+        }
+
+        const API_URL = "http://127.0.0.1:8000/itinerary";
+        const VOICE_API_URL = "http://127.0.0.1:8000/voice/process";
 
         // --- SUBMIT LOGIC WITH REDIRECT FIX ---
         document.getElementById("submit-btn").addEventListener("click", async () => {
             const btn = document.getElementById("submit-btn");
             const errorMsg = document.getElementById("error-message");
             const loadingOverlay = document.getElementById("loading-overlay");
-            
+
             // Clear previous error
             errorMsg.style.display = "none";
 
@@ -893,7 +1291,7 @@
                     duration: parseInt(document.getElementById("duration").value),
                     start_date: document.getElementById("start-date").value,
                     budget: parseInt(document.getElementById("budget-range").value),
-                    specific_places: selectedTags.join(", "), 
+                    specific_places: selectedTags.join(", "),
                     preferences: document.getElementById("preferences").value,
                     vibes: activeVibes.map(c => c.innerText.trim())
                 };
@@ -907,30 +1305,41 @@
                     body: JSON.stringify(payload)
                 });
 
+                if (!response.ok) {
+                    // Try to parse JSON error response, fallback to text
+                    let errorMessage = "Server error";
+                    const contentType = response.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        try {
+                            const errorData = await response.json();
+                            errorMessage = errorData.detail || errorData.message || errorData.error || JSON.stringify(errorData);
+                        } catch (e) {
+                            errorMessage = "Failed to parse error response";
+                        }
+                    } else {
+                        errorMessage = await response.text() || "Server error";
+                    }
+                    throw new Error(errorMessage);
+                }
+
                 const data = await response.json();
 
-                if (!response.ok) {
-                    throw new Error(data.detail || data.message || "Server error");
-                }
+                // Backend returns itinerary JSON directly
+                console.log("✅ Received itinerary:", data);
 
-                if (data.success) {
-                    console.log("✅ Received itinerary:", data.data);
-                    
-                    // --- 3. SAVE DATA ---
-                    localStorage.setItem('chakadola_itinerary', JSON.stringify(data.data));
-                    
-                    // --- 4. REDIRECT ---
-                    window.location.href = "results.html";
-                } else {
-                    throw new Error(data.message || "Failed to generate itinerary");
-                }
+                // Save entire response
+                localStorage.setItem('chakadola_itinerary', JSON.stringify(data));
+
+                // Redirect
+                window.location.href = "results.html";
+
 
             } catch (error) {
                 console.error("❌ Error:", error);
-                
+
                 // --- 5. HIDE LOADER ON ERROR ---
                 loadingOverlay.style.display = "none";
-                
+
                 errorMsg.textContent = `❌ ${error.message || "Could not connect to server."}`;
                 errorMsg.style.display = "block";
             }
@@ -948,7 +1357,7 @@
             const children = parseInt(document.getElementById("child-count").value) || 0;
             const abled = parseInt(document.getElementById("abled-count").value) || 0;
             const errorMsg = document.getElementById("error-message");
-            
+
             if (seniors + children + abled > groupSize) {
                 errorMsg.textContent = "⚠️ Warning: Composition exceeds Total Group Size (" + groupSize + ")";
                 errorMsg.style.display = "block";
@@ -958,4 +1367,5 @@
         }
     </script>
 </body>
+
 </html>
